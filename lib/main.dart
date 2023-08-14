@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sexpertise/Frontend/ChangePasswordScreen.dart';
 import 'package:sexpertise/Frontend/ForgotPasswordScreen.dart';
 import 'package:sexpertise/Frontend/OTPVerificationScreen.dart';
 
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: OTPVerificationScreen(),
+      home: ChangePasswordScreen(),
     );
   }
 }
