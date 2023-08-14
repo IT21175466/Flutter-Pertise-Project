@@ -17,7 +17,9 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Container(
         height: screenHeight - AppBar().preferredSize.height,
         width: screenWidth,
-        child: Image.asset('lib/Assets/Logo.jpeg'),
+        child: Center(
+          child: Image.asset('lib/Assets/Logo.jpeg'),
+        ),
       ),
     );
   }
