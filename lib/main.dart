@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sexpertise/Frontend/LoginScreen.dart';
-import 'package:sexpertise/Frontend/SplashScreen.dart';
+import 'package:sexpertise/Frontend/ForgotPasswordScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -34,7 +33,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: LoginScreen(),
+      home: ForgotPasswordScreen(),
     );
   }
 }
