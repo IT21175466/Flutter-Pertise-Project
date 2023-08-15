@@ -112,7 +112,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   //Login Button
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      // Navigator.pushReplacement(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (context) => SecondScreen()));
+                    },
                     child: Container(
                       height: 55,
                       width: screenWidth - 30,
