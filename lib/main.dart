@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sexpertise/Frontend/AdminHomeScreen.dart';
-import 'package:sexpertise/Frontend/ChangePasswordScreen.dart';
-import 'package:sexpertise/Frontend/ForgotPasswordScreen.dart';
-import 'package:sexpertise/Frontend/OTPVerificationScreen.dart';
+import 'package:sexpertise/Frontend/SplashScreen.dart';
+import 'package:sexpertise/Frontend/UserHomeScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,10 +31,10 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        //colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: AdminHomeScreen(),
+      home: UserHomeScreen(),
     );
   }
 }

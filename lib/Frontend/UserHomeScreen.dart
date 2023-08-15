@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class AdminHomeScreen extends StatefulWidget {
-  const AdminHomeScreen({super.key});
+class UserHomeScreen extends StatefulWidget {
+  const UserHomeScreen({super.key});
 
   @override
-  State<AdminHomeScreen> createState() => _AdminHomeScreenState();
+  State<UserHomeScreen> createState() => _UserHomeScreenState();
 }
 
-class _AdminHomeScreenState extends State<AdminHomeScreen> {
+class _UserHomeScreenState extends State<UserHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,42 +16,40 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
           Icons.person_rounded,
           color: Color.fromARGB(255, 0, 74, 173),
         ),
-        title: const SingleChildScrollView(
-          child: Row(
-            children: [
-              Column(
-                children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "Hello,",
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Color.fromARGB(255, 0, 74, 173),
-                        fontWeight: FontWeight.w700,
-                      ),
+        title: Row(
+          children: [
+            Column(
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Hello,",
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Color.fromARGB(255, 0, 74, 173),
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
-                  Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Text(
-                      "Admin",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                      ),
+                ),
+                Align(
+                  alignment: Alignment.bottomLeft,
+                  child: Text(
+                    "Jonathan",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
-                ],
-              ),
-              Spacer(),
-              Icon(
-                Icons.notifications_outlined,
-                size: 35,
-                color: Color.fromARGB(255, 0, 74, 173),
-              ),
-            ],
-          ),
+                ),
+              ],
+            ),
+            Spacer(),
+            Icon(
+              Icons.notifications_outlined,
+              size: 35,
+              color: Color.fromARGB(255, 0, 74, 173),
+            ),
+          ],
         ),
         backgroundColor: const Color.fromARGB(255, 244, 246, 255),
       ),
@@ -91,7 +89,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                   child: IconButton(
                     onPressed: () {},
                     icon: Icon(
-                      Icons.people,
+                      Icons.library_books,
                       color: Color.fromARGB(255, 0, 74, 173),
                       size: 120,
                     ),
@@ -123,7 +121,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                   width: 150,
                   child: Center(
                     child: Text(
-                      'Manage User',
+                      'Read Blogs',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
@@ -140,23 +138,6 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
             //2nd Row
             Row(
               children: [
-                Spacer(),
-                Container(
-                  height: 150,
-                  width: 150,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.library_books_outlined,
-                      color: Color.fromARGB(255, 0, 74, 173),
-                      size: 120,
-                    ),
-                  ),
-                ),
                 Spacer(),
                 Container(
                   height: 150,
@@ -175,6 +156,23 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                   ),
                 ),
                 Spacer(),
+                Container(
+                  height: 150,
+                  width: 150,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.quiz,
+                      color: Color.fromARGB(255, 0, 74, 173),
+                      size: 120,
+                    ),
+                  ),
+                ),
+                Spacer(),
               ],
             ),
             SizedBox(
@@ -187,7 +185,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                   width: 150,
                   child: Center(
                     child: Text(
-                      'Manage Blogs',
+                      'Watch Videos',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
@@ -200,7 +198,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                   width: 150,
                   child: Center(
                     child: Text(
-                      'Manage Videos',
+                      'Quizzes',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
@@ -215,7 +213,6 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
             //3rd Row
             Spacer(),
 
-            //2nd Row
             Row(
               children: [
                 Spacer(),
@@ -229,7 +226,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                   child: IconButton(
                     onPressed: () {},
                     icon: Icon(
-                      Icons.comment,
+                      Icons.reviews,
                       color: Color.fromARGB(255, 0, 74, 173),
                       size: 120,
                     ),
@@ -265,7 +262,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                   width: 150,
                   child: Center(
                     child: Text(
-                      'Comments',
+                      'Add Reviews',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
