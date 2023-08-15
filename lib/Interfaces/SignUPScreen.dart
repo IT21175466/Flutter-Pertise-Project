@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sexpertise/Interfaces/LoginScreen.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -41,6 +42,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             child: Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
+                                'SignUp',
                                 ' \nNew \nPassword',
                                 style: TextStyle(
                                   fontSize: 35,
@@ -196,6 +198,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 SizedBox(
                                   width: 5,
                                 ),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                LoginScreen()));
+                                  },
+                                  child: Text(
+                                    "Login",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color: Color.fromARGB(255, 0, 74, 173),
+                                    ),
                                 Text(
                                   "Login",
                                   style: TextStyle(

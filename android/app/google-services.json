@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "40460823309",
+    "project_id": "sexpertise-52fd1",
+    "storage_bucket": "sexpertise-52fd1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:40460823309:android:add2bb3376b48af2865e44",
+        "android_client_info": {
+          "package_name": "com.example.sexpertise"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "40460823309-g8mjduuevrsum8m1o8r3l2lnjoi3l7dk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcLaNLZ2M67joRk4CizMOf6AlfKx5pEsM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "40460823309-g8mjduuevrsum8m1o8r3l2lnjoi3l7dk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
