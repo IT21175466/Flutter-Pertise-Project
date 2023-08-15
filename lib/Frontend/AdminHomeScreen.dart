@@ -16,7 +16,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
           Icons.person_rounded,
           color: Color.fromARGB(255, 0, 74, 173),
         ),
-        title: SingleChildScrollView(
+        title: const SingleChildScrollView(
           child: Row(
             children: [
               Column(
@@ -59,6 +59,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
         padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
         child: Column(
           children: [
+            Spacer(),
             //1st Row
             Row(
               children: [
@@ -288,6 +289,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                 Spacer(),
               ],
             ),
+            Spacer(),
           ],
         ),
       ),
