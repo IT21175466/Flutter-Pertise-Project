@@ -43,7 +43,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               alignment: Alignment.centerLeft,
                               child: Text(
                                 'SignUp',
-                                ' \nNew \nPassword',
                                 style: TextStyle(
                                   fontSize: 35,
                                   fontWeight: FontWeight.w600,
@@ -212,14 +211,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       fontWeight: FontWeight.w500,
                                       color: Color.fromARGB(255, 0, 74, 173),
                                     ),
-                                Text(
-                                  "Login",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: Color.fromARGB(255, 0, 74, 173),
                                   ),
                                 ),
-                                Spacer(),
                               ],
                             ),
                           ),
