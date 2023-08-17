@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:email_validator/email_validator.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -102,14 +102,31 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
   }
 
+  Future addUserDetails(String name, String uID, String email) async {
+    await FirebaseFirestore.instance.collection('Users').doc(uID).set({
+      'User_ID': uID,
+      'Name': name,
+      'Role': 'User',
+      'Email': email,
+    });
+  }
+
   Future signUp() async {
     setState(() {
       isClicked = true;
     });
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      UserCredential userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
+      );
+      User? user = userCredential.user;
+
+      addUserDetails(
+        _nameController.text.trim(),
+        user!.uid,
+        _emailController.text.trim(),
       );
 
       setState(() {
@@ -124,9 +141,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('User registered successfully!')),
       );
-      navigatorKey!.currentState!.popUntil((route) => route.isFirst);
     } on FirebaseAuthException catch (e) {
-      navigatorKey!.currentState!.popUntil((route) => route.isFirst);
       print(e);
       setState(() {
         isClicked = false;
@@ -135,7 +150,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
         SnackBar(content: Text('User registered failed!')),
       );
     }
-    navigatorKey!.currentState!.popUntil((route) => route.isFirst);
     setState(() {
       isClicked = false;
     });

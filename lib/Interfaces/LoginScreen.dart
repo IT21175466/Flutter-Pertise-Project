@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sexpertise/Interfaces/SignUPScreen.dart';
@@ -12,7 +12,11 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  late final GlobalKey<NavigatorState>? navigatorKey;
+
   bool isSecurePassword = true;
+  bool isClicked = false;
+
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
@@ -94,6 +98,39 @@ class _LoginScreenState extends State<LoginScreen> {
         },
       );
     }
+  }
+
+  Future signIn() async {
+    setState(() {
+      isClicked = true;
+    });
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+      setState(() {
+        isClicked = false;
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Login successfully!')),
+      );
+      navigatorKey!.currentState!.popUntil((route) => route.isFirst);
+    } on FirebaseAuthException catch (e) {
+      navigatorKey!.currentState!.popUntil((route) => route.isFirst);
+      print(e);
+      setState(() {
+        isClicked = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Login failed!')),
+      );
+    }
+    navigatorKey!.currentState!.popUntil((route) => route.isFirst);
+    setState(() {
+      isClicked = false;
+    });
   }
 
   @override
@@ -209,6 +246,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           _wrongCredentials();
                         } else if (password.length < 8) {
                           _passwordCharactorsCheck();
+                        } else {
+                          signIn();
                         }
                       },
                       child: Container(
@@ -226,14 +265,16 @@ class _LoginScreenState extends State<LoginScreen> {
                           ],
                         ),
                         child: Center(
-                          child: Text(
-                            'Login',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 24,
-                              color: Colors.white,
-                            ),
-                          ),
+                          child: isClicked
+                              ? CircularProgressIndicator()
+                              : Text(
+                                  'Login',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 24,
+                                    color: Colors.white,
+                                  ),
+                                ),
                         ),
                       ),
                     ),
