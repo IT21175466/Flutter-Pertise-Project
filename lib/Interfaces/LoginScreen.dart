@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sexpertise/Interfaces/SignUPScreen.dart';
 
@@ -10,6 +13,88 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool isSecurePassword = true;
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+
+  void _wrongCredentials() {
+    if (Platform.isIOS) {
+      showCupertinoDialog(
+        context: context,
+        builder: (BuildContext dialogContext) {
+          return CupertinoAlertDialog(
+            title: Text("Credential Error"),
+            content: Text("Please fill all the required fields."),
+            actions: <Widget>[
+              CupertinoDialogAction(
+                child: Text("OK"),
+                onPressed: () {
+                  Navigator.of(dialogContext).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext dialogContext) {
+          return AlertDialog(
+            title: Text("Credential Error"),
+            content: Text("Please fill all the required fields."),
+            actions: <Widget>[
+              TextButton(
+                child: Text("OK"),
+                onPressed: () {
+                  Navigator.of(dialogContext).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
+  void _passwordCharactorsCheck() {
+    if (Platform.isIOS) {
+      showCupertinoDialog(
+        context: context,
+        builder: (BuildContext dialogContext) {
+          return CupertinoAlertDialog(
+            title: Text("Password Error"),
+            content: Text("Password require minimum 8 charactors."),
+            actions: <Widget>[
+              CupertinoDialogAction(
+                child: Text("OK"),
+                onPressed: () {
+                  Navigator.of(dialogContext).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext dialogContext) {
+          return AlertDialog(
+            title: Text("Password Error"),
+            content: Text("Password require minimum 8 charactors."),
+            actions: <Widget>[
+              TextButton(
+                child: Text("OK"),
+                onPressed: () {
+                  Navigator.of(dialogContext).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     width: screenWidth - 30,
                     height: 55,
                     child: TextField(
+                      controller: _emailController,
                       decoration: InputDecoration(
                         prefixIcon: const Icon(
                           Icons.email,
@@ -70,6 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     width: screenWidth - 30,
                     height: 55,
                     child: TextField(
+                      controller: _passwordController,
                       obscureText: isSecurePassword,
                       decoration: InputDecoration(
                         prefixIcon: const Icon(
@@ -113,7 +200,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   //Login Button
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      String email = _emailController.text;
+                      String password = _passwordController.text;
+
+                      if (email.isEmpty || password.isEmpty) {
+                        _wrongCredentials();
+                      } else if (password.length < 8) {
+                        _passwordCharactorsCheck();
+                      }
+                    },
                     child: Container(
                       height: 55,
                       width: screenWidth - 30,
