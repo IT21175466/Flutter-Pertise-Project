@@ -1,8 +1,11 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sexpertise/Interfaces/AdminHomeScreen.dart';
 import 'package:sexpertise/Interfaces/SignUPScreen.dart';
+import 'package:sexpertise/Interfaces/UserHomeScreen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -105,10 +108,43 @@ class _LoginScreenState extends State<LoginScreen> {
       isClicked = true;
     });
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      final newUser = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
       );
+
+      User? user = newUser.user;
+
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection("Users")
+          .doc(user?.uid)
+          .get();
+
+      // Check the user's role
+      String userRole = userDoc['Role'];
+
+      // Based on the user's role, navigate to appropriate screens
+      if (userRole == 'Admin') {
+        // Navigate to admin screen
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => AdminHomeScreen(),
+          ),
+        );
+      } else if (userRole == 'User') {
+        // Navigate to user screen
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => UserHomeScreen(),
+          ),
+        );
+      }
+      // Clear the text fields after successful registration
+      _emailController.clear();
+      _passwordController.clear();
+
       setState(() {
         isClicked = false;
       });
@@ -116,9 +152,7 @@ class _LoginScreenState extends State<LoginScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Login successfully!')),
       );
-      navigatorKey!.currentState!.popUntil((route) => route.isFirst);
     } on FirebaseAuthException catch (e) {
-      navigatorKey!.currentState!.popUntil((route) => route.isFirst);
       print(e);
       setState(() {
         isClicked = false;
@@ -127,7 +161,6 @@ class _LoginScreenState extends State<LoginScreen> {
         SnackBar(content: Text('Login failed!')),
       );
     }
-    navigatorKey!.currentState!.popUntil((route) => route.isFirst);
     setState(() {
       isClicked = false;
     });
