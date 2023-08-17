@@ -1,5 +1,6 @@
 import 'dart:io';
-
+import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sexpertise/Interfaces/LoginScreen.dart';
@@ -12,7 +13,10 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  late final GlobalKey<NavigatorState>? navigatorKey;
+
   bool isSecurePassword = true;
+  bool isClicked = false;
 
   TextEditingController _nameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
@@ -96,6 +100,45 @@ class _SignUpScreenState extends State<SignUpScreen> {
         },
       );
     }
+  }
+
+  Future signUp() async {
+    setState(() {
+      isClicked = true;
+    });
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+
+      setState(() {
+        isClicked = false;
+      });
+
+      // Clear the text fields after successful registration
+      _emailController.clear();
+      _passwordController.clear();
+      _nameController.clear();
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('User registered successfully!')),
+      );
+      navigatorKey!.currentState!.popUntil((route) => route.isFirst);
+    } on FirebaseAuthException catch (e) {
+      navigatorKey!.currentState!.popUntil((route) => route.isFirst);
+      print(e);
+      setState(() {
+        isClicked = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('User registered failed!')),
+      );
+    }
+    navigatorKey!.currentState!.popUntil((route) => route.isFirst);
+    setState(() {
+      isClicked = false;
+    });
   }
 
   @override
@@ -252,6 +295,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           _wrongCredentials();
                         } else if (password.length < 8) {
                           _passwordCharactorsCheck();
+                        } else {
+                          signUp();
                         }
                       },
                       child: Container(
@@ -269,14 +314,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ],
                         ),
                         child: Center(
-                          child: Text(
-                            'SignUp',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 24,
-                              color: Colors.white,
-                            ),
-                          ),
+                          child: isClicked
+                              ? CircularProgressIndicator()
+                              : Text(
+                                  'SignUp',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 24,
+                                    color: Colors.white,
+                                  ),
+                                ),
                         ),
                       ),
                     ),
