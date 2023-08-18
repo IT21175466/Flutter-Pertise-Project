@@ -1,15 +1,78 @@
+import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:otp_text_field/otp_field.dart';
-import 'package:otp_text_field/style.dart';
+
+import 'LoginScreen.dart';
 
 class OTPVerificationScreen extends StatefulWidget {
-  const OTPVerificationScreen({super.key});
+  final String email;
+  const OTPVerificationScreen({super.key, required this.email});
 
   @override
   State<OTPVerificationScreen> createState() => _OTPVerificationScreenState();
 }
 
 class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
+  bool isEmailVerified = false;
+  bool competed = false;
+  late Timer timer;
+
+  @override
+  void initState() {
+    super.initState();
+
+    timer = Timer.periodic(
+      Duration(seconds: 3),
+      (_) => checkEmailVerification(),
+    );
+  }
+
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
+  }
+
+  Future checkEmailVerification() async {
+    await FirebaseAuth.instance.currentUser!.reload();
+
+    setState(() {
+      isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
+    });
+
+    if (isEmailVerified) {
+      timer.cancel();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Verification Success!'),
+        ),
+      );
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => LoginScreen(),
+        ),
+      );
+    }
+  }
+
+  void checkVerification() {
+    isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
+
+    if (!isEmailVerified) {
+      setState(() {
+        competed = false;
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Verification Failed!'),
+            backgroundColor: Colors.redAccent,
+          ),
+        );
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -29,18 +92,23 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                           (screenWidth * 0.6666666666666666).toDouble()),
                       painter: CustomShape(),
                     ),
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 15),
-                      height: 250,
-                      width: 250,
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Verification',
-                          style: TextStyle(
-                            fontSize: 35,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 15),
+                        height: 250,
+                        width: 250,
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'Verification',
+                            style: TextStyle(
+                              fontSize: 35,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
@@ -57,9 +125,9 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                   children: [
                     Container(
                       child: Text(
-                        'OTP Verification',
+                        'Email Verification',
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 23,
                           fontWeight: FontWeight.w600,
                           letterSpacing: 2,
                         ),
@@ -68,7 +136,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                     ),
                     Container(
                       child: Text(
-                        ' \n Enter the OTP sent to',
+                        '\n Verification Email sent to',
                         style: TextStyle(
                           fontSize: 14,
                           letterSpacing: 1,
@@ -76,13 +144,16 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                         textAlign: TextAlign.center,
                       ),
                     ),
+                    SizedBox(
+                      height: 20,
+                    ),
                     Container(
                       child: Text(
-                        'reallygreasite@gmail.com',
+                        '${widget.email}',
                         style: TextStyle(
                           fontSize: 14,
                           letterSpacing: 1,
-                          color: Color.fromARGB(255, 0, 74, 173),
+                          color: Colors.blue,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -91,24 +162,22 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                       height: 50,
                     ),
                     Container(
-                      width: screenWidth - 20,
-                      child: OTPTextField(
-                        length: 4,
-                        width: MediaQuery.of(context).size.width,
-                        fieldWidth: 50,
-                        style: TextStyle(fontSize: 17),
-                        textFieldAlignment: MainAxisAlignment.spaceAround,
-                        fieldStyle: FieldStyle.box,
-                        onCompleted: (pin) {
-                          print("Completed: " + pin);
-                        },
+                      child: Text(
+                        ' Check your email and click on the \n confrmation link to continue.',
+                        style: TextStyle(
+                          fontSize: 15,
+                          letterSpacing: 1,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
                     ),
                     SizedBox(
-                      height: 15,
+                      height: 35,
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        checkVerification();
+                      },
                       child: Container(
                         height: 55,
                         width: screenWidth - 30,
@@ -125,7 +194,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                         ),
                         child: Center(
                           child: Text(
-                            'Verify',
+                            'Continue',
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 24,
