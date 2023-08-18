@@ -158,7 +158,10 @@ class _LoginScreenState extends State<LoginScreen> {
         isClicked = false;
       });
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Login failed!')),
+        SnackBar(
+          content: Text('$e'),
+          backgroundColor: Colors.red,
+        ),
       );
     }
     setState(() {

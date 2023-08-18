@@ -12,8 +12,13 @@ class AdminHomeScreen extends StatefulWidget {
 class _AdminHomeScreenState extends State<AdminHomeScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   String? adminName;
+  bool isLoading = false;
 
   void getUserData() async {
+    setState(() {
+      isLoading = true;
+    });
+
     User? user = _auth.currentUser;
     //_uid = user?.uid;
     print('${user!.email}');
@@ -25,6 +30,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
 
     setState(() {
       adminName = userDoc.get('Name');
+      isLoading = false;
     });
   }
 
@@ -60,13 +66,21 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                   ),
                   Align(
                     alignment: Alignment.bottomLeft,
-                    child: Text(
-                      '$adminName',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
+                    child: isLoading
+                        ? Text(
+                            '',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          )
+                        : Text(
+                            '$adminName',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
                   ),
                 ],
               ),
