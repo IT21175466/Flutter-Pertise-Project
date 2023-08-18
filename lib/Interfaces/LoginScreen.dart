@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sexpertise/Interfaces/AdminHomeScreen.dart';
+import 'package:sexpertise/Interfaces/ForgotPasswordScreen.dart';
 import 'package:sexpertise/Interfaces/SignUPScreen.dart';
 import 'package:sexpertise/Interfaces/UserHomeScreen.dart';
 
@@ -258,13 +259,23 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
 
                     //Forget Password
-                    Container(
-                      width: screenWidth,
-                      child: Center(
-                        child: Text(
-                          'Forget Password?',
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 0, 74, 173),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ForgotPasswordScreen(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        width: screenWidth,
+                        child: Center(
+                          child: Text(
+                            'Forget Password?',
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 0, 74, 173),
+                            ),
                           ),
                         ),
                       ),

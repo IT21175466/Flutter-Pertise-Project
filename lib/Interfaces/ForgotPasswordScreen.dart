@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sexpertise/Interfaces/LoginScreen.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -8,8 +10,43 @@ class ForgotPasswordScreen extends StatefulWidget {
 }
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
+  TextEditingController _emailController = TextEditingController();
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
+    Future resetPassword() async {
+      setState(() {
+        isLoading = true;
+      });
+
+      try {
+        await FirebaseAuth.instance
+            .sendPasswordResetEmail(email: _emailController.text.trim());
+        setState(() {
+          isLoading = false;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Email Send Successfully!')),
+        );
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => LoginScreen()));
+      } on FirebaseAuthException catch (e) {
+        setState(() {
+          isLoading = false;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('$e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+      setState(() {
+        isLoading = false;
+      });
+    }
+
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -78,6 +115,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       width: screenWidth - 30,
                       height: 55,
                       child: TextField(
+                        controller: _emailController,
                         decoration: InputDecoration(
                           prefixIcon: const Icon(
                             Icons.email,
@@ -102,7 +140,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       height: 15,
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        resetPassword();
+                      },
                       child: Container(
                         height: 55,
                         width: screenWidth - 30,
@@ -118,14 +158,18 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           ],
                         ),
                         child: Center(
-                          child: Text(
-                            'Send',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 24,
-                              color: Colors.white,
-                            ),
-                          ),
+                          child: isLoading
+                              ? Center(
+                                  child: CircularProgressIndicator(),
+                                )
+                              : Text(
+                                  'Send',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 24,
+                                    color: Colors.white,
+                                  ),
+                                ),
                         ),
                       ),
                     ),
