@@ -141,13 +141,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('User registered successfully!')),
       );
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => LoginScreen(),
+        ),
+      );
     } on FirebaseAuthException catch (e) {
       print(e);
       setState(() {
         isClicked = false;
       });
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('User registered failed!')),
+        SnackBar(
+          content: Text('$e'),
+          backgroundColor: Colors.red,
+        ),
       );
     }
     setState(() {
