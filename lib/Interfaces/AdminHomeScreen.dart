@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AdminHomeScreen extends StatefulWidget {
@@ -8,6 +10,30 @@ class AdminHomeScreen extends StatefulWidget {
 }
 
 class _AdminHomeScreenState extends State<AdminHomeScreen> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  String? adminName;
+
+  void getUserData() async {
+    User? user = _auth.currentUser;
+    //_uid = user?.uid;
+    print('${user!.email}');
+
+    final DocumentSnapshot userDoc = await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(user.uid)
+        .get();
+
+    setState(() {
+      adminName = userDoc.get('Name');
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUserData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +42,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
           Icons.person_rounded,
           color: Color.fromARGB(255, 0, 74, 173),
         ),
-        title: const SingleChildScrollView(
+        title: SingleChildScrollView(
           child: Row(
             children: [
               Column(
@@ -35,7 +61,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                   Align(
                     alignment: Alignment.bottomLeft,
                     child: Text(
-                      "Admin",
+                      '$adminName',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w700,
