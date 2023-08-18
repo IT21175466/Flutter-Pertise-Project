@@ -417,11 +417,11 @@ class _LoginScreenState extends State<LoginScreen> {
         },
         icon: isSecurePassword
             ? Icon(
-                Icons.visibility,
+                Icons.visibility_off,
                 color: Color.fromARGB(255, 0, 74, 173),
               )
             : Icon(
-                Icons.visibility_off,
+                Icons.visibility,
                 color: Color.fromARGB(255, 0, 74, 173),
               ));
   }
