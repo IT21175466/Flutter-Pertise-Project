@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sexpertise/Interfaces/LoginScreen.dart';
+import 'package:sexpertise/Interfaces/OTPVerificationScreen.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -17,6 +18,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   bool isSecurePassword = true;
   bool isClicked = false;
+
+  // bool competed = false;
 
   TextEditingController _nameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
@@ -121,6 +124,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
       );
+
       User? user = userCredential.user;
 
       addUserDetails(
@@ -129,24 +133,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
         _emailController.text.trim(),
       );
 
+      await user.sendEmailVerification();
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Verification Email Sent!')),
+      );
+
       setState(() {
         isClicked = false;
       });
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => OTPVerificationScreen(
+            email: '${user.email}',
+          ),
+        ),
+      );
 
       // Clear the text fields after successful registration
       _emailController.clear();
       _passwordController.clear();
       _nameController.clear();
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('User registered successfully!')),
-      );
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => LoginScreen(),
-        ),
-      );
     } on FirebaseAuthException catch (e) {
       print(e);
       setState(() {
