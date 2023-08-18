@@ -67,6 +67,14 @@ flutter:
   assets:
     - lib/Assets/Logo.jpeg
     - lib/Assets/google.png
+    - lib/Assets/chatbot.png
+    - lib/Assets/blogging.png
+    - lib/Assets/comment.png
+    - lib/Assets/group.png
+    - lib/Assets/video.png
+    - lib/Assets/settings.png
+    - lib/Assets/review.png
+    - lib/Assets/quiz.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
