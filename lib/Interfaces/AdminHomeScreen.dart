@@ -66,21 +66,24 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                   ),
                   Align(
                     alignment: Alignment.bottomLeft,
-                    child: isLoading
-                        ? Text(
-                            '',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          )
-                        : Text(
-                            '$adminName',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
+                    child:
+                        // isLoading
+                        //     ? Text(
+                        //         '',
+                        //         style: TextStyle(
+                        //           fontSize: 16,
+                        //           fontWeight: FontWeight.w700,
+                        //         ),
+                        //       )
+                        //     :
+                        Text(
+                      //'$adminName',
+                      "Admin",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
                   ),
                 ],
               ),
