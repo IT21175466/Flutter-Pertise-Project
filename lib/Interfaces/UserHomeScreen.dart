@@ -102,37 +102,25 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
               children: [
                 Spacer(),
                 Container(
+                  padding: EdgeInsets.symmetric(vertical: 35, horizontal: 35),
                   height: 150,
                   width: 150,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.chat_bubble_outline,
-                      color: Color.fromARGB(255, 0, 74, 173),
-                      size: 120,
-                    ),
-                  ),
+                  child: Image.asset('lib/Assets/chatbot.png'),
                 ),
                 Spacer(),
                 Container(
+                  padding: EdgeInsets.symmetric(vertical: 35, horizontal: 35),
                   height: 150,
                   width: 150,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.library_books,
-                      color: Color.fromARGB(255, 0, 74, 173),
-                      size: 120,
-                    ),
-                  ),
+                  child: Image.asset('lib/Assets/blogging.png'),
                 ),
                 Spacer(),
               ],
@@ -179,37 +167,25 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
               children: [
                 Spacer(),
                 Container(
+                  padding: EdgeInsets.symmetric(vertical: 35, horizontal: 35),
                   height: 150,
                   width: 150,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.video_call,
-                      color: Color.fromARGB(255, 0, 74, 173),
-                      size: 120,
-                    ),
-                  ),
+                  child: Image.asset('lib/Assets/video.png'),
                 ),
                 Spacer(),
                 Container(
+                  padding: EdgeInsets.symmetric(vertical: 35, horizontal: 35),
                   height: 150,
                   width: 150,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.quiz,
-                      color: Color.fromARGB(255, 0, 74, 173),
-                      size: 120,
-                    ),
-                  ),
+                  child: Image.asset('lib/Assets/quiz.png'),
                 ),
                 Spacer(),
               ],
@@ -256,37 +232,25 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
               children: [
                 Spacer(),
                 Container(
+                  padding: EdgeInsets.symmetric(vertical: 35, horizontal: 35),
                   height: 150,
                   width: 150,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.reviews,
-                      color: Color.fromARGB(255, 0, 74, 173),
-                      size: 120,
-                    ),
-                  ),
+                  child: Image.asset('lib/Assets/review.png'),
                 ),
                 Spacer(),
                 Container(
+                  padding: EdgeInsets.symmetric(vertical: 35, horizontal: 35),
                   height: 150,
                   width: 150,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.settings,
-                      color: Color.fromARGB(255, 0, 74, 173),
-                      size: 120,
-                    ),
-                  ),
+                  child: Image.asset('lib/Assets/settings.png'),
                 ),
                 Spacer(),
               ],

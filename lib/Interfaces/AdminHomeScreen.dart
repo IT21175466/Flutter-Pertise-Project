@@ -37,7 +37,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
   @override
   void initState() {
     super.initState();
-    getUserData();
+    //getUserData();
   }
 
   @override
@@ -108,37 +108,25 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
               children: [
                 Spacer(),
                 Container(
+                  padding: EdgeInsets.symmetric(vertical: 35, horizontal: 35),
                   height: 150,
                   width: 150,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.chat_bubble_outline,
-                      color: Color.fromARGB(255, 0, 74, 173),
-                      size: 120,
-                    ),
-                  ),
+                  child: Image.asset('lib/Assets/chatbot.png'),
                 ),
                 Spacer(),
                 Container(
+                  padding: EdgeInsets.symmetric(vertical: 35, horizontal: 35),
                   height: 150,
                   width: 150,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.people,
-                      color: Color.fromARGB(255, 0, 74, 173),
-                      size: 120,
-                    ),
-                  ),
+                  child: Image.asset('lib/Assets/group.png'),
                 ),
                 Spacer(),
               ],
@@ -185,37 +173,25 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
               children: [
                 Spacer(),
                 Container(
+                  padding: EdgeInsets.symmetric(vertical: 35, horizontal: 35),
                   height: 150,
                   width: 150,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.library_books_outlined,
-                      color: Color.fromARGB(255, 0, 74, 173),
-                      size: 120,
-                    ),
-                  ),
+                  child: Image.asset('lib/Assets/blogging.png'),
                 ),
                 Spacer(),
                 Container(
+                  padding: EdgeInsets.symmetric(vertical: 35, horizontal: 35),
                   height: 150,
                   width: 150,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.video_call,
-                      color: Color.fromARGB(255, 0, 74, 173),
-                      size: 120,
-                    ),
-                  ),
+                  child: Image.asset('lib/Assets/video.png'),
                 ),
                 Spacer(),
               ],
@@ -263,37 +239,25 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
               children: [
                 Spacer(),
                 Container(
+                  padding: EdgeInsets.symmetric(vertical: 35, horizontal: 35),
                   height: 150,
                   width: 150,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.comment,
-                      color: Color.fromARGB(255, 0, 74, 173),
-                      size: 120,
-                    ),
-                  ),
+                  child: Image.asset('lib/Assets/comment.png'),
                 ),
                 Spacer(),
                 Container(
+                  padding: EdgeInsets.symmetric(vertical: 35, horizontal: 35),
                   height: 150,
                   width: 150,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.settings,
-                      color: Color.fromARGB(255, 0, 74, 173),
-                      size: 120,
-                    ),
-                  ),
+                  child: Image.asset('lib/Assets/settings.png'),
                 ),
                 Spacer(),
               ],
