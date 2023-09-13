@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:sexpertise/Interfaces/AdminQuizList.dart';
 import 'package:sexpertise/Interfaces/SplashScreen.dart';
+import 'package:sexpertise/Interfaces/UserQuizList.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,7 +38,7 @@ class MyApp extends StatelessWidget {
         //colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: SplashScreen(),
+      home: UserQuizList(),
     );
   }
 }
