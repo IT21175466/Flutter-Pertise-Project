@@ -149,18 +149,20 @@ class _AddQuestionState extends State<AddQuestion> {
         isClicked = false;
       });
 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => AddQuestion()),
-      );
+      Future.delayed(const Duration(seconds: 2), () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => AddQuestion()),
+        );
+      });
 
       // Clear the text fields after successful
-      _questionController.clear();
-      _answer01Controller.clear();
-      _answer02Controller.clear();
-      _answer03Controller.clear();
-      _answer04Controller.clear();
-      _correctAnswerController.clear();
+      // _questionController.clear();
+      // _answer01Controller.clear();
+      // _answer02Controller.clear();
+      // _answer03Controller.clear();
+      // _answer04Controller.clear();
+      // _correctAnswerController.clear();
     } on FirebaseAuthException catch (e) {
       print(e);
       setState(() {

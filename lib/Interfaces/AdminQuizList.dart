@@ -13,6 +13,7 @@ class AdminQuizList extends StatefulWidget {
 class _AdminQuizListState extends State<AdminQuizList> {
   int documentCount = 0;
   bool emptyQuestions = false;
+  int number = 0;
 
   final _quizStrem =
       FirebaseFirestore.instance.collection('Questions').snapshots();
@@ -84,7 +85,10 @@ class _AdminQuizListState extends State<AdminQuizList> {
                           // Get the document ID.
                           String documentId = documents[index].id;
 
-                          return SingleQuestionTitleCard(quizNum: documentId);
+                          return SingleQuestionTitleCard(
+                            quizNum: documentId,
+                            number: (index + 1).toString(),
+                          );
                           // ListTile(
                           //   title: Text('Document ID: $documentId'),
                           // );

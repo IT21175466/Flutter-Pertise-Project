@@ -3,7 +3,9 @@ import 'package:sexpertise/Interfaces/QuizDoingPage.dart';
 
 class SingleQuestionTitleCard extends StatefulWidget {
   final String quizNum;
-  const SingleQuestionTitleCard({super.key, required this.quizNum});
+  final String number;
+  const SingleQuestionTitleCard(
+      {super.key, required this.quizNum, required this.number});
 
   @override
   State<SingleQuestionTitleCard> createState() =>
@@ -11,10 +13,9 @@ class SingleQuestionTitleCard extends StatefulWidget {
 }
 
 class _SingleQuestionTitleCardState extends State<SingleQuestionTitleCard> {
-  String? quizNumber;
-
   @override
   Widget build(BuildContext context) {
+    print(widget.number);
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -41,7 +42,7 @@ class _SingleQuestionTitleCardState extends State<SingleQuestionTitleCard> {
           child: Row(
             children: [
               Text(
-                'Question',
+                'Question ${widget.number}',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w600,

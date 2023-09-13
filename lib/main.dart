@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:sexpertise/Interfaces/AddQuestion.dart';
+import 'package:sexpertise/Interfaces/AdminHomeScreen.dart';
 import 'package:sexpertise/Interfaces/AdminQuizList.dart';
 import 'package:sexpertise/Interfaces/QuizDoingPage.dart';
 import 'package:sexpertise/Interfaces/SplashScreen.dart';
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
         //colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: AdminQuizList(),
+      home: SplashScreen(),
     );
   }
 }

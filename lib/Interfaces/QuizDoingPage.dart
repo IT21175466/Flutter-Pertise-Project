@@ -195,11 +195,13 @@ class _QuizDoingPageState extends State<QuizDoingPage> {
             ),
             Align(
               alignment: Alignment.topLeft,
-              child: Text(
-                '$question',
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 23,
+              child: Expanded(
+                child: Text(
+                  '$question',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 23,
+                  ),
                 ),
               ),
             ),
@@ -232,18 +234,15 @@ class _QuizDoingPageState extends State<QuizDoingPage> {
                   alignment: Alignment.centerLeft,
                   child: Row(
                     children: [
-                      Text(
-                        '$answer01',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 17,
-                          color: isCorrect1 ? Colors.white : Colors.black,
+                      Expanded(
+                        child: Text(
+                          '$answer01',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 17,
+                            color: isCorrect1 ? Colors.white : Colors.black,
+                          ),
                         ),
-                      ),
-                      Spacer(),
-                      Icon(
-                        Icons.done_rounded,
-                        color: Colors.white,
                       ),
                     ],
                   ),
@@ -281,18 +280,15 @@ class _QuizDoingPageState extends State<QuizDoingPage> {
                   alignment: Alignment.centerLeft,
                   child: Row(
                     children: [
-                      Text(
-                        '$answer02',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 17,
-                          color: isCorrect2 ? Colors.white : Colors.black,
+                      Expanded(
+                        child: Text(
+                          '$answer02',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 17,
+                            color: isCorrect2 ? Colors.white : Colors.black,
+                          ),
                         ),
-                      ),
-                      Spacer(),
-                      Icon(
-                        Icons.done_rounded,
-                        color: Colors.white,
                       ),
                     ],
                   ),
@@ -330,18 +326,15 @@ class _QuizDoingPageState extends State<QuizDoingPage> {
                   alignment: Alignment.centerLeft,
                   child: Row(
                     children: [
-                      Text(
-                        '$answer03',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 17,
-                          color: isCorrect3 ? Colors.white : Colors.black,
+                      Expanded(
+                        child: Text(
+                          '$answer03',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 17,
+                            color: isCorrect3 ? Colors.white : Colors.black,
+                          ),
                         ),
-                      ),
-                      Spacer(),
-                      Icon(
-                        Icons.done_rounded,
-                        color: Colors.white,
                       ),
                     ],
                   ),
@@ -379,18 +372,15 @@ class _QuizDoingPageState extends State<QuizDoingPage> {
                   alignment: Alignment.centerLeft,
                   child: Row(
                     children: [
-                      Text(
-                        '$answer04',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 17,
-                          color: isCorrect4 ? Colors.white : Colors.black,
+                      Expanded(
+                        child: Text(
+                          '$answer04',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 17,
+                            color: isCorrect4 ? Colors.white : Colors.black,
+                          ),
                         ),
-                      ),
-                      Spacer(),
-                      Icon(
-                        Icons.done_rounded,
-                        color: Colors.white,
                       ),
                     ],
                   ),
