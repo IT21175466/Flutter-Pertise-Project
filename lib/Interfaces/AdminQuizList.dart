@@ -17,11 +17,6 @@ class _AdminQuizListState extends State<AdminQuizList> {
   @override
   void initState() {
     getDocumentCount();
-    if (documentCount == 0) {
-      setState(() {
-        emptyQuestions = true;
-      });
-    }
     super.initState();
   }
 
@@ -34,6 +29,15 @@ class _AdminQuizListState extends State<AdminQuizList> {
         documentCount = snapshot.docs.length;
         print(documentCount);
       });
+      if (documentCount == 0) {
+        setState(() {
+          emptyQuestions = true;
+        });
+      } else {
+        setState(() {
+          emptyQuestions = false;
+        });
+      }
     });
   }
 

@@ -16,11 +16,6 @@ class _UserQuizListState extends State<UserQuizList> {
   @override
   void initState() {
     getDocumentCount();
-    if (documentCount == 0) {
-      setState(() {
-        emptyQuestions = true;
-      });
-    }
     super.initState();
   }
 
@@ -33,6 +28,15 @@ class _UserQuizListState extends State<UserQuizList> {
         documentCount = snapshot.docs.length;
         print(documentCount);
       });
+      if (documentCount == 0) {
+        setState(() {
+          emptyQuestions = true;
+        });
+      } else {
+        setState(() {
+          emptyQuestions = false;
+        });
+      }
     });
   }
 
