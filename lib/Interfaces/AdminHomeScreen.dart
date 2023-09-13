@@ -246,7 +246,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Image.asset('lib/Assets/comment.png'),
+                  child: Image.asset('lib/Assets/quiz.png'),
                 ),
                 Spacer(),
                 Container(
@@ -272,7 +272,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                   width: 150,
                   child: Center(
                     child: Text(
-                      'Comments',
+                      'Quizzes',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
