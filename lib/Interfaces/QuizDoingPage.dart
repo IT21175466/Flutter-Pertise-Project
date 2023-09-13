@@ -21,6 +21,10 @@ class _QuizDoingPageState extends State<QuizDoingPage> {
   }
 
   bool loading = false;
+  bool isCorrect1 = false;
+  bool isCorrect2 = false;
+  bool isCorrect3 = false;
+  bool isCorrect4 = false;
 
   String question = '';
   String answer01 = '';
@@ -28,6 +32,51 @@ class _QuizDoingPageState extends State<QuizDoingPage> {
   String answer03 = '';
   String answer04 = '';
   String correctAnswer = '';
+
+  void showWrongDialog() {
+    if (Platform.isIOS) {
+      showCupertinoDialog(
+        context: context,
+        builder: (BuildContext dialogContext) {
+          return CupertinoAlertDialog(
+            title: Text("Your Anser is Wrong!"),
+            content: Text("Try Again"),
+            actions: <Widget>[
+              CupertinoDialogAction(
+                child: Text("OK"),
+                onPressed: () {
+                  Navigator.of(dialogContext).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext dialogContext) {
+          return AlertDialog(
+            title: Text("Your Anser is Wrong!"),
+            content: Text("Try Again"),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(dialogContext).pop();
+                },
+                child: const Text('OK'),
+              ),
+
+              // child: Text("OK"),
+              // onPressed: () {
+              //   Navigator.of(dialogContext).pop();
+              // },
+            ],
+          );
+        },
+      );
+    }
+  }
 
   void showCorrectDialog() {
     if (Platform.isIOS) {
@@ -158,10 +207,12 @@ class _QuizDoingPageState extends State<QuizDoingPage> {
             GestureDetector(
               onTap: () {
                 if (answer01 == correctAnswer) {
+                  setState(() {
+                    isCorrect1 = true;
+                  });
                   showCorrectDialog();
                 } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text("Your Answer is Wrong!")));
+                  showWrongDialog();
                 }
               },
               child: Container(
@@ -170,16 +221,31 @@ class _QuizDoingPageState extends State<QuizDoingPage> {
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  color: Colors.white,
+                  color:
+                      isCorrect1 ? Color.fromRGBO(0, 74, 173, 1) : Colors.white,
+                  border: Border.all(
+                    color: Color.fromRGBO(0, 74, 173, 1),
+                    width: 1.5,
+                  ),
                 ),
                 child: Align(
                   alignment: Alignment.centerLeft,
-                  child: Text(
-                    '$answer01',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 17,
-                    ),
+                  child: Row(
+                    children: [
+                      Text(
+                        '$answer01',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 17,
+                          color: isCorrect1 ? Colors.white : Colors.black,
+                        ),
+                      ),
+                      Spacer(),
+                      Icon(
+                        Icons.done_rounded,
+                        color: Colors.white,
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -190,10 +256,12 @@ class _QuizDoingPageState extends State<QuizDoingPage> {
             GestureDetector(
               onTap: () {
                 if (answer02 == correctAnswer) {
+                  setState(() {
+                    isCorrect2 = true;
+                  });
                   showCorrectDialog();
                 } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text("Your Answer is Wrong!")));
+                  showWrongDialog();
                 }
               },
               child: Container(
@@ -201,20 +269,32 @@ class _QuizDoingPageState extends State<QuizDoingPage> {
                 width: double.infinity,
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white,
-                    border: Border.all(
-                      color: Color.fromRGBO(0, 74, 173, 1),
-                      width: 1.5,
-                    )),
+                  borderRadius: BorderRadius.circular(20),
+                  color:
+                      isCorrect2 ? Color.fromRGBO(0, 74, 173, 1) : Colors.white,
+                  border: Border.all(
+                    color: Color.fromRGBO(0, 74, 173, 1),
+                    width: 1.5,
+                  ),
+                ),
                 child: Align(
                   alignment: Alignment.centerLeft,
-                  child: Text(
-                    '$answer02',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 17,
-                    ),
+                  child: Row(
+                    children: [
+                      Text(
+                        '$answer02',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 17,
+                          color: isCorrect2 ? Colors.white : Colors.black,
+                        ),
+                      ),
+                      Spacer(),
+                      Icon(
+                        Icons.done_rounded,
+                        color: Colors.white,
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -225,10 +305,12 @@ class _QuizDoingPageState extends State<QuizDoingPage> {
             GestureDetector(
               onTap: () {
                 if (answer03 == correctAnswer) {
+                  setState(() {
+                    isCorrect3 = true;
+                  });
                   showCorrectDialog();
                 } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text("Your Answer is Wrong!")));
+                  showWrongDialog();
                 }
               },
               child: Container(
@@ -237,16 +319,31 @@ class _QuizDoingPageState extends State<QuizDoingPage> {
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  color: Colors.white,
+                  color:
+                      isCorrect3 ? Color.fromRGBO(0, 74, 173, 1) : Colors.white,
+                  border: Border.all(
+                    color: Color.fromRGBO(0, 74, 173, 1),
+                    width: 1.5,
+                  ),
                 ),
                 child: Align(
                   alignment: Alignment.centerLeft,
-                  child: Text(
-                    '$answer03',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 17,
-                    ),
+                  child: Row(
+                    children: [
+                      Text(
+                        '$answer03',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 17,
+                          color: isCorrect3 ? Colors.white : Colors.black,
+                        ),
+                      ),
+                      Spacer(),
+                      Icon(
+                        Icons.done_rounded,
+                        color: Colors.white,
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -257,10 +354,12 @@ class _QuizDoingPageState extends State<QuizDoingPage> {
             GestureDetector(
               onTap: () {
                 if (answer04 == correctAnswer) {
+                  setState(() {
+                    isCorrect4 = true;
+                  });
                   showCorrectDialog();
                 } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text("Your Answer is Wrong!")));
+                  showWrongDialog();
                 }
               },
               child: Container(
@@ -269,19 +368,49 @@ class _QuizDoingPageState extends State<QuizDoingPage> {
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  color: Colors.white,
+                  color:
+                      isCorrect4 ? Color.fromRGBO(0, 74, 173, 1) : Colors.white,
+                  border: Border.all(
+                    color: Color.fromRGBO(0, 74, 173, 1),
+                    width: 1.5,
+                  ),
                 ),
                 child: Align(
                   alignment: Alignment.centerLeft,
-                  child: Text(
-                    '$answer04',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 17,
-                    ),
+                  child: Row(
+                    children: [
+                      Text(
+                        '$answer04',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 17,
+                          color: isCorrect4 ? Colors.white : Colors.black,
+                        ),
+                      ),
+                      Spacer(),
+                      Icon(
+                        Icons.done_rounded,
+                        color: Colors.white,
+                      ),
+                    ],
                   ),
                 ),
               ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Center(
+              child: isCorrect1 || isCorrect2 || isCorrect3 || isCorrect4
+                  ? Text(
+                      'Correct answer is ${correctAnswer}',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 17,
+                        color: isCorrect4 ? Colors.white : Colors.black,
+                      ),
+                    )
+                  : SizedBox(),
             ),
             Spacer(),
           ],

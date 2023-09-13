@@ -91,7 +91,7 @@ class _AdminQuizListState extends State<AdminQuizList> {
                         },
                       );
                     }
-                    return Text('no data');
+                    return Center(child: CircularProgressIndicator());
                   })
               // SingleChildScrollView(
               //   child:
