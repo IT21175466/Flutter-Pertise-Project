@@ -22,13 +22,20 @@ class _SingleQuestionTitleCardState extends State<SingleQuestionTitleCard> {
           width: 2,
         ),
       ),
-      child: Center(
-        child: Text(
-          'Question',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-          ),
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 15),
+        child: Row(
+          children: [
+            Text(
+              'Question',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            Spacer(),
+            Icon(Icons.arrow_forward_ios)
+          ],
         ),
       ),
     );
