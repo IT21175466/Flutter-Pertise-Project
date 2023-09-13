@@ -1,5 +1,6 @@
 import 'dart:io';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +12,8 @@ class AddQuestion extends StatefulWidget {
 }
 
 class _AddQuestionState extends State<AddQuestion> {
+  bool isClicked = false;
+
   TextEditingController _questionController = TextEditingController();
   TextEditingController _answer01Controller = TextEditingController();
   TextEditingController _answer02Controller = TextEditingController();
@@ -96,6 +99,68 @@ class _AddQuestionState extends State<AddQuestion> {
         },
       );
     }
+  }
+
+  Future addQuestion(String mQuestion, String mAnswer_01, String mAnswer_02,
+      String mAnswer_03, String mAnswer_04, String mCorrect_Answer) async {
+    await FirebaseFirestore.instance.collection('Questions').doc().set({
+      'Question': mQuestion,
+      'Answer_01': mAnswer_01,
+      'Answer_02': mAnswer_02,
+      'Answer_03': mAnswer_03,
+      'Answer_04': mAnswer_04,
+      'Correct_Answer': mCorrect_Answer,
+    });
+  }
+
+  Future AddQuestionToFirebase() async {
+    setState(() {
+      isClicked = true;
+    });
+    try {
+      addQuestion(
+          _questionController.text.trim(),
+          _answer01Controller.text.trim(),
+          _answer02Controller.text.trim(),
+          _answer03Controller.text.trim(),
+          _answer04Controller.text.trim(),
+          _correctAnswerController.text.trim());
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Question Added Sucesss!')),
+      );
+
+      setState(() {
+        isClicked = false;
+      });
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => AddQuestion()),
+      );
+
+      // Clear the text fields after successful
+      _questionController.clear();
+      _answer01Controller.clear();
+      _answer02Controller.clear();
+      _answer03Controller.clear();
+      _answer04Controller.clear();
+      _correctAnswerController.clear();
+    } on FirebaseAuthException catch (e) {
+      print(e);
+      setState(() {
+        isClicked = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('$e'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+    setState(() {
+      isClicked = false;
+    });
   }
 
   @override
@@ -288,6 +353,7 @@ class _AddQuestionState extends State<AddQuestion> {
                       answer03 == correctAnswer ||
                       answer04 == correctAnswer) {
                     print('Matching All');
+                    AddQuestionToFirebase();
                   } else {
                     _answerError();
                   }
@@ -307,16 +373,15 @@ class _AddQuestionState extends State<AddQuestion> {
                     ],
                   ),
                   child: Center(
-                    // child: isClicked
-                    //     ? CircularProgressIndicator()
-                    //     :
-                    child: Text(
-                      'Add as a Question',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white,
-                      ),
-                    ),
+                    child: isClicked
+                        ? CircularProgressIndicator()
+                        : Text(
+                            'Add as a Question',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white,
+                            ),
+                          ),
                   ),
                 ),
               ),
