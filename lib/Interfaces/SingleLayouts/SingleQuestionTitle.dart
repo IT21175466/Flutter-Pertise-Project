@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class SingleQuestionTitleCard extends StatefulWidget {
-  const SingleQuestionTitleCard({super.key});
+  final String quizNum;
+  const SingleQuestionTitleCard({super.key, required this.quizNum});
 
   @override
   State<SingleQuestionTitleCard> createState() =>
@@ -9,6 +10,8 @@ class SingleQuestionTitleCard extends StatefulWidget {
 }
 
 class _SingleQuestionTitleCardState extends State<SingleQuestionTitleCard> {
+  String? quizNumber;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -27,7 +30,7 @@ class _SingleQuestionTitleCardState extends State<SingleQuestionTitleCard> {
         child: Row(
           children: [
             Text(
-              'Question 1',
+              'Question ${widget.quizNum}',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
