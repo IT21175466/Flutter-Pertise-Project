@@ -14,6 +14,9 @@ class _AdminQuizListState extends State<AdminQuizList> {
   int documentCount = 0;
   bool emptyQuestions = false;
 
+  final _quizStrem =
+      FirebaseFirestore.instance.collection('Questions').snapshots();
+
   @override
   void initState() {
     getDocumentCount();
@@ -69,15 +72,37 @@ class _AdminQuizListState extends State<AdminQuizList> {
               padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
               color: const Color.fromARGB(255, 244, 246, 255),
               height: MediaQuery.of(context).size.height,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    for (var i = 1; i <= documentCount; i++)
-                      SingleQuestionTitleCard(quizNum: i.toString())
-                  ],
-                ),
+              child: StreamBuilder(
+                  stream: _quizStrem,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      List<DocumentSnapshot> documents = snapshot.data!.docs;
+
+                      return ListView.builder(
+                        itemCount: documents.length,
+                        itemBuilder: (context, index) {
+                          // Get the document ID.
+                          String documentId = documents[index].id;
+
+                          return SingleQuestionTitleCard(quizNum: documentId);
+                          // ListTile(
+                          //   title: Text('Document ID: $documentId'),
+                          // );
+                        },
+                      );
+                    }
+                    return Text('no data');
+                  })
+              // SingleChildScrollView(
+              //   child:
+              //   Column(
+              //     children: [
+              //       for (var i = 1; i <= documentCount; i++)
+              //         SingleQuestionTitleCard(quizNum: i.toString())
+              //     ],
+              //   ),
+              // ),
               ),
-            ),
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Color.fromRGBO(0, 74, 173, 1),
         label: Row(

@@ -30,10 +30,18 @@ class _SingleQuestionTitleCardState extends State<SingleQuestionTitleCard> {
         child: Row(
           children: [
             Text(
-              'Question ${widget.quizNum}',
+              'Question',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
+              ),
+            ),
+            Text(
+              '${widget.quizNum}',
+              style: TextStyle(
+                fontSize: 5,
+                fontWeight: FontWeight.w600,
+                color: Color.fromARGB(255, 244, 246, 255),
               ),
             ),
             Spacer(),

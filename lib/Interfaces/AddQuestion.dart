@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 class AddQuestion extends StatefulWidget {
   const AddQuestion({super.key});
@@ -13,6 +14,19 @@ class AddQuestion extends StatefulWidget {
 
 class _AddQuestionState extends State<AddQuestion> {
   bool isClicked = false;
+  String docID = '';
+
+  @override
+  void initState() {
+    super.initState();
+    docID = generateRandomId();
+    print(docID);
+  }
+
+  String generateRandomId() {
+    var uuid = Uuid();
+    return uuid.v4();
+  }
 
   TextEditingController _questionController = TextEditingController();
   TextEditingController _answer01Controller = TextEditingController();
@@ -103,13 +117,14 @@ class _AddQuestionState extends State<AddQuestion> {
 
   Future addQuestion(String mQuestion, String mAnswer_01, String mAnswer_02,
       String mAnswer_03, String mAnswer_04, String mCorrect_Answer) async {
-    await FirebaseFirestore.instance.collection('Questions').doc().set({
+    await FirebaseFirestore.instance.collection('Questions').doc(docID).set({
       'Question': mQuestion,
       'Answer_01': mAnswer_01,
       'Answer_02': mAnswer_02,
       'Answer_03': mAnswer_03,
       'Answer_04': mAnswer_04,
       'Correct_Answer': mCorrect_Answer,
+      'Doc_ID': docID,
     });
   }
 
