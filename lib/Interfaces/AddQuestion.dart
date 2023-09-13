@@ -265,7 +265,7 @@ class _AddQuestionState extends State<AddQuestion> {
                 ),
               ),
               SizedBox(
-                height: 60,
+                height: 50,
               ),
               GestureDetector(
                 onTap: () {
@@ -319,6 +319,9 @@ class _AddQuestionState extends State<AddQuestion> {
                     ),
                   ),
                 ),
+              ),
+              SizedBox(
+                height: 10,
               ),
             ],
           ),
