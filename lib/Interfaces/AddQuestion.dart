@@ -149,7 +149,7 @@ class _AddQuestionState extends State<AddQuestion> {
         isClicked = false;
       });
 
-      Future.delayed(const Duration(seconds: 2), () {
+      Future.delayed(const Duration(seconds: 1), () {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => AddQuestion()),
@@ -236,9 +236,12 @@ class _AddQuestionState extends State<AddQuestion> {
               ),
               Container(
                 width: screenWidth - 30,
-                height: 55,
+                height: 100,
                 child: TextField(
                   controller: _answer01Controller,
+                  maxLines: null,
+                  expands: true,
+                  keyboardType: TextInputType.multiline,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
@@ -259,9 +262,12 @@ class _AddQuestionState extends State<AddQuestion> {
               ),
               Container(
                 width: screenWidth - 30,
-                height: 55,
+                height: 100,
                 child: TextField(
                   controller: _answer02Controller,
+                  maxLines: null,
+                  expands: true,
+                  keyboardType: TextInputType.multiline,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
@@ -282,9 +288,12 @@ class _AddQuestionState extends State<AddQuestion> {
               ),
               Container(
                 width: screenWidth - 30,
-                height: 55,
+                height: 100,
                 child: TextField(
                   controller: _answer03Controller,
+                  maxLines: null,
+                  expands: true,
+                  keyboardType: TextInputType.multiline,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
@@ -305,9 +314,12 @@ class _AddQuestionState extends State<AddQuestion> {
               ),
               Container(
                 width: screenWidth - 30,
-                height: 55,
+                height: 100,
                 child: TextField(
                   controller: _answer04Controller,
+                  maxLines: null,
+                  expands: true,
+                  keyboardType: TextInputType.multiline,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
@@ -328,9 +340,12 @@ class _AddQuestionState extends State<AddQuestion> {
               ),
               Container(
                 width: screenWidth - 30,
-                height: 55,
+                height: 100,
                 child: TextField(
                   controller: _correctAnswerController,
+                  maxLines: null,
+                  expands: true,
+                  keyboardType: TextInputType.multiline,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),

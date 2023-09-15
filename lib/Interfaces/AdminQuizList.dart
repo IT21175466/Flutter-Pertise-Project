@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sexpertise/Interfaces/AddQuestion.dart';
-import 'package:sexpertise/Interfaces/SingleLayouts/SingleQuestionTitle.dart';
+import 'package:sexpertise/Interfaces/SingleLayouts/AdminSingleQuestionTile.dart';
 
 class AdminQuizList extends StatefulWidget {
   const AdminQuizList({super.key});
@@ -85,11 +85,10 @@ class _AdminQuizListState extends State<AdminQuizList> {
                           // Get the document ID.
                           String documentId = documents[index].id;
 
-                          return SingleQuestionTitleCard(
+                          return AdminSingleQuestionTitleCard(
                             quizNum: documentId,
                             number: (index + 1).toString(),
-                          );
-                          // ListTile(
+                          ); // ListTile(
                           //   title: Text('Document ID: $documentId'),
                           // );
                         },
