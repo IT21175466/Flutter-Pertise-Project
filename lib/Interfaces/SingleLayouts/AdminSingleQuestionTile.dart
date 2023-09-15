@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sexpertise/Interfaces/QuizDoingPage.dart';
 import 'package:sexpertise/Interfaces/QuizEditPage.dart';
 
 class AdminSingleQuestionTitleCard extends StatefulWidget {
