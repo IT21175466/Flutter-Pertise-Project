@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chip_tags/flutter_chip_tags.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:sexpertise/Interfaces/Admin/ArticleListPage.dart';
 import 'package:uuid/uuid.dart';
 
 class AddArticle extends StatefulWidget {
@@ -18,6 +19,7 @@ class AddArticle extends StatefulWidget {
 
 class _AddArticleState extends State<AddArticle> {
   bool isClicked = false;
+  bool uploaded = false;
   String docID = '';
   String imageUrl = '';
 
@@ -30,7 +32,7 @@ class _AddArticleState extends State<AddArticle> {
   @override
   void initState() {
     super.initState();
-    generateRandomId();
+    docID = generateRandomId();
   }
 
   TextEditingController _topicController = TextEditingController();
@@ -59,37 +61,24 @@ class _AddArticleState extends State<AddArticle> {
         _selectedImage = File(pickedImage.path);
       });
     }
-  }
 
-  //Upload Image
-  Future<void> _uploadImage() async {
-    if (_selectedImage == null) {
-      print('No image selected.');
-      return;
-    }
+    //String uniqueFileName = DateTime.now().microsecondsSinceEpoch.toString();
+
+    Reference referenceRoot = FirebaseStorage.instance.ref();
+    Reference referenceDirImages = referenceRoot.child('images');
+
+    Reference referenceImageToUpload = referenceDirImages.child(docID);
 
     try {
-      final FirebaseStorage storage = FirebaseStorage.instance;
-      final Reference storageRef = storage
-          .ref()
-          .child('images/${DateTime.now().millisecondsSinceEpoch}.png');
+      await referenceImageToUpload.putFile(File(pickedImage!.path));
 
-      UploadTask uploadTask = storageRef.putFile(_selectedImage!);
+      imageUrl = await referenceImageToUpload.getDownloadURL();
 
-      // Wait for the upload to complete
-      await uploadTask;
-
-      // Retrieve the download URL
-      String downloadURL = await storageRef.getDownloadURL();
-
-      // Store the download URL in the imageUrl variable
       setState(() {
-        imageUrl = downloadURL;
+        uploaded == true;
       });
-
-      print('Image uploaded to Firebase Storage.');
     } catch (e) {
-      print('Error uploading image: $e');
+      print(e);
     }
   }
 
@@ -230,12 +219,12 @@ class _AddArticleState extends State<AddArticle> {
         isClicked = false;
       });
 
-      // Future.delayed(const Duration(seconds: 1), () {
-      //   Navigator.pushReplacement(
-      //     context,
-      //     MaterialPageRoute(builder: (context) => AddArticle()),
-      //   );
-      // });
+      Future.delayed(const Duration(seconds: 1), () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => ArticleListAdmin()),
+        );
+      });
     } on FirebaseAuthException catch (e) {
       print(e);
       setState(() {
@@ -393,8 +382,7 @@ class _AddArticleState extends State<AddArticle> {
                       // else if (_selectedImage != null) {
                       //   addImage();
                     } else {
-                      //_uploadImage();
-                      //AddArticelToFirebase();
+                      AddArticelToFirebase();
                     }
                   },
                   child: Container(
