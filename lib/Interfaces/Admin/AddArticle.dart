@@ -190,7 +190,7 @@ class _AddArticleState extends State<AddArticle> {
   Future addAdminArticle(String topic, String description, List<String> myList,
       String imageUrl) async {
     await FirebaseFirestore.instance.collection('Articles').doc(docID).set({
-      'User_ID': docID,
+      'Article_ID': docID,
       'Topic': topic,
       'Description': description,
       'Tags': myList,
