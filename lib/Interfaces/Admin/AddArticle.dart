@@ -376,7 +376,7 @@ class _AddArticleState extends State<AddArticle> {
                       _wrongCredentials();
                     } else if (_myList.isEmpty) {
                       enterTags();
-                    } else if (_myList.length > 5) {
+                    } else if (_myList.length > 5 || _myList.length < 5) {
                       chechTagsLength();
                       //}
                       // else if (_selectedImage != null) {
