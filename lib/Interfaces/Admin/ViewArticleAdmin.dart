@@ -78,7 +78,7 @@ class _ViewArticleAdminState extends State<ViewArticleAdmin> {
               ),
               Text(
                 '$topic',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w500,
                 ),
@@ -90,7 +90,7 @@ class _ViewArticleAdminState extends State<ViewArticleAdmin> {
               const SizedBox(
                 height: 20,
               ),
-              Text(
+              const Text(
                 "Tags:",
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
@@ -102,14 +102,14 @@ class _ViewArticleAdminState extends State<ViewArticleAdmin> {
               Wrap(
                 children: [
                   Container(
-                    padding: EdgeInsets.all(10),
-                    margin: EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(10),
+                    margin: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
                       color: const Color.fromARGB(255, 0, 74, 173),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: _tagsList.isEmpty
-                        ? Text(
+                        ? const Text(
                             "No Tags",
                             style: TextStyle(
                               color: Colors.white,
@@ -117,20 +117,20 @@ class _ViewArticleAdminState extends State<ViewArticleAdmin> {
                           )
                         : Text(
                             _tagsList[0],
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.white,
                             ),
                           ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(10),
-                    margin: EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(10),
+                    margin: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
                       color: const Color.fromARGB(255, 0, 74, 173),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: _tagsList.isEmpty
-                        ? Text(
+                        ? const Text(
                             "No Tags",
                             style: TextStyle(
                               color: Colors.white,
@@ -138,20 +138,20 @@ class _ViewArticleAdminState extends State<ViewArticleAdmin> {
                           )
                         : Text(
                             _tagsList[1],
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.white,
                             ),
                           ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(10),
-                    margin: EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(10),
+                    margin: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
                       color: const Color.fromARGB(255, 0, 74, 173),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: _tagsList.isEmpty
-                        ? Text(
+                        ? const Text(
                             "No Tags",
                             style: TextStyle(
                               color: Colors.white,
@@ -159,20 +159,20 @@ class _ViewArticleAdminState extends State<ViewArticleAdmin> {
                           )
                         : Text(
                             _tagsList[2],
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.white,
                             ),
                           ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(10),
-                    margin: EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(10),
+                    margin: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
                       color: const Color.fromARGB(255, 0, 74, 173),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: _tagsList.isEmpty
-                        ? Text(
+                        ? const Text(
                             "No Tags",
                             style: TextStyle(
                               color: Colors.white,
@@ -180,20 +180,20 @@ class _ViewArticleAdminState extends State<ViewArticleAdmin> {
                           )
                         : Text(
                             _tagsList[3],
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.white,
                             ),
                           ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(10),
-                    margin: EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(10),
+                    margin: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
                       color: const Color.fromARGB(255, 0, 74, 173),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: _tagsList.isEmpty
-                        ? Text(
+                        ? const Text(
                             "No Tags",
                             style: TextStyle(
                               color: Colors.white,
@@ -201,7 +201,7 @@ class _ViewArticleAdminState extends State<ViewArticleAdmin> {
                           )
                         : Text(
                             _tagsList[4],
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.white,
                             ),
                           ),
@@ -224,7 +224,7 @@ class _ViewArticleAdminState extends State<ViewArticleAdmin> {
                     ),
                   ],
                 ),
-                child: Center(
+                child: const Center(
                   child: Text(
                     'Edit',
                     style: TextStyle(
@@ -250,7 +250,7 @@ class _ViewArticleAdminState extends State<ViewArticleAdmin> {
                     ),
                   ],
                 ),
-                child: Center(
+                child: const Center(
                   child: Text(
                     'Delete',
                     style: TextStyle(
