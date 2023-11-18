@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sexpertise/Interfaces/Admin/AddArticle.dart';
+import 'package:sexpertise/Interfaces/Admin/ViewArticleAdmin.dart';
 
 class ArticleListAdmin extends StatefulWidget {
   const ArticleListAdmin({super.key});
@@ -9,6 +11,14 @@ class ArticleListAdmin extends StatefulWidget {
 }
 
 class _ArticleListAdminState extends State<ArticleListAdmin> {
+  final _articles =
+      FirebaseFirestore.instance.collection('Articles').snapshots();
+
+  String selectedIndex = '';
+
+  TextEditingController _search = TextEditingController();
+  String search = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,6 +63,7 @@ class _ArticleListAdminState extends State<ArticleListAdmin> {
                     width: 100,
                     height: 45,
                     child: TextField(
+                      controller: _search,
                       decoration: InputDecoration(
                         suffixIcon: const Icon(
                           Icons.search,
@@ -70,11 +81,369 @@ class _ArticleListAdminState extends State<ArticleListAdmin> {
                         ),
                         labelText: 'Search',
                       ),
+                      onChanged: (value) {
+                        print(value);
+                        setState(() {
+                          search = value.toString();
+                        });
+                      },
                     ),
                   ),
                 ),
               ],
-            )
+            ),
+            const SizedBox(
+              height: 25,
+            ),
+            Expanded(
+              child: StreamBuilder(
+                stream: _articles,
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return const Text("Connection Error");
+                  }
+
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Text("Loading......");
+                  }
+                  var docs = snapshot.data!.docs;
+                  return ListView.builder(
+                    itemCount: docs.length,
+                    itemBuilder: (context, index) {
+                      if (_search.text.toString().isEmpty) {
+                        return Container(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 5),
+                          margin: const EdgeInsets.symmetric(vertical: 5),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.white,
+                          ),
+                          child: Center(
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  selectedIndex =
+                                      docs[index]['Article_ID'].toString();
+                                  print(selectedIndex);
+
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          ViewArticleAdmin(id: selectedIndex),
+                                    ),
+                                  );
+                                });
+                              },
+                              child: Container(
+                                height: 110,
+                                decoration: BoxDecoration(
+                                  color:
+                                      const Color.fromARGB(255, 244, 243, 243),
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                    color:
+                                        const Color.fromARGB(255, 0, 74, 173),
+                                  ),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: 110,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          image: NetworkImage(
+                                              docs[index]['Image']),
+                                          fit: BoxFit.fitHeight,
+                                        ),
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(10),
+                                          bottomLeft: Radius.circular(10),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 15,
+                                    ),
+                                    Expanded(
+                                      child: Container(
+                                        padding: const EdgeInsets.only(top: 5),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              docs[index]['Topic'],
+                                              style: const TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: SingleChildScrollView(
+                                                child: Column(
+                                                  children: [
+                                                    Container(
+                                                      margin:
+                                                          const EdgeInsets.only(
+                                                              top: 5),
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 5,
+                                                              bottom: 10,
+                                                              right: 5),
+                                                      child: Wrap(
+                                                        children: [
+                                                          Text(
+                                                            "Tags : ${docs[index]['Tags'][0] as String}, ",
+                                                            style:
+                                                                const TextStyle(
+                                                              fontSize: 10,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            "${docs[index]['Tags'][1] as String}, ",
+                                                            style:
+                                                                const TextStyle(
+                                                              fontSize: 10,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            "${docs[index]['Tags'][2] as String}, ",
+                                                            style:
+                                                                const TextStyle(
+                                                              fontSize: 10,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            "${docs[index]['Tags'][3] as String}, ",
+                                                            style:
+                                                                const TextStyle(
+                                                              fontSize: 10,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            (docs[index]['Tags']
+                                                                        [4]
+                                                                    as String)
+                                                                .toString(),
+                                                            style:
+                                                                const TextStyle(
+                                                              fontSize: 10,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      } else if (docs[index]['Topic']
+                              .toLowerCase()
+                              .contains(_search.text.toString()) ||
+                          docs[index]['Tags'][0]
+                              .toLowerCase()
+                              .contains(_search.text.toString()) ||
+                          docs[index]['Tags'][1]
+                              .toLowerCase()
+                              .contains(_search.text.toString()) ||
+                          docs[index]['Tags'][2]
+                              .toLowerCase()
+                              .contains(_search.text.toString()) ||
+                          docs[index]['Tags'][3]
+                              .toLowerCase()
+                              .contains(_search.text.toString()) ||
+                          docs[index]['Tags'][4]
+                              .toLowerCase()
+                              .contains(_search.text.toString())) {
+                        return Container(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 5),
+                          margin: const EdgeInsets.symmetric(vertical: 5),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.white,
+                          ),
+                          child: Center(
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  selectedIndex =
+                                      docs[index]['Article_ID'].toString();
+                                  print(selectedIndex);
+
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          ViewArticleAdmin(id: selectedIndex),
+                                    ),
+                                  );
+                                });
+                              },
+                              child: Container(
+                                height: 110,
+                                decoration: BoxDecoration(
+                                  color:
+                                      const Color.fromARGB(255, 244, 243, 243),
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                    color:
+                                        const Color.fromARGB(255, 0, 74, 173),
+                                  ),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: 110,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          image: NetworkImage(
+                                            docs[index]['Image'],
+                                          ),
+                                          fit: BoxFit.fitHeight,
+                                        ),
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(10),
+                                          bottomLeft: Radius.circular(10),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 15,
+                                    ),
+                                    Expanded(
+                                      child: Container(
+                                        padding: const EdgeInsets.only(top: 5),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              docs[index]['Topic'],
+                                              style: const TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: SingleChildScrollView(
+                                                child: Column(
+                                                  children: [
+                                                    Container(
+                                                      margin:
+                                                          const EdgeInsets.only(
+                                                              top: 5),
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 5,
+                                                              bottom: 10,
+                                                              right: 5),
+                                                      child: Wrap(
+                                                        children: [
+                                                          Text(
+                                                            "Tags : ${docs[index]['Tags'][0] as String}, ",
+                                                            style:
+                                                                const TextStyle(
+                                                              fontSize: 10,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            "${docs[index]['Tags'][1] as String}, ",
+                                                            style:
+                                                                const TextStyle(
+                                                              fontSize: 10,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            "${docs[index]['Tags'][2] as String}, ",
+                                                            style:
+                                                                const TextStyle(
+                                                              fontSize: 10,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            "${docs[index]['Tags'][3] as String}, ",
+                                                            style:
+                                                                const TextStyle(
+                                                              fontSize: 10,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            (docs[index]['Tags']
+                                                                        [4]
+                                                                    as String)
+                                                                .toString(),
+                                                            style:
+                                                                const TextStyle(
+                                                              fontSize: 10,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      } else {
+                        return Container();
+                      }
+                    },
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),
