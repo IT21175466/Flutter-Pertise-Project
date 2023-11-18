@@ -236,7 +236,7 @@ class _EditArticleState extends State<EditArticle> {
   }
 
   //Delete Image
-  Future<void> deleteImage(String docID) async {
+  Future<void> deleteImage() async {
     try {
       final Reference imageRef = FirebaseStorage.instance.refFromURL(imageUrl);
 
@@ -271,7 +271,7 @@ class _EditArticleState extends State<EditArticle> {
                   setState(() {
                     tapOnImage = true;
                   });
-                  deleteImage(docID).then((_) {
+                  deleteImage().then((_) {
                     print('Deleted Sucess!');
                     setState(() {
                       tapOnImage = false;

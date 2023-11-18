@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:sexpertise/Interfaces/Admin/ArticleListPage.dart';
 import 'package:sexpertise/Interfaces/Admin/EditArticle.dart';
 
 class ViewArticleAdmin extends StatefulWidget {
@@ -11,6 +13,7 @@ class ViewArticleAdmin extends StatefulWidget {
 }
 
 class _ViewArticleAdminState extends State<ViewArticleAdmin> {
+  bool isClicked = false;
   String? id;
 
   @override
@@ -37,6 +40,22 @@ class _ViewArticleAdminState extends State<ViewArticleAdmin> {
       imageUrl = articleDoc.get('Image');
       _tagsList = List<String>.from(articleDoc.get('Tags') ?? []);
     });
+  }
+
+  //Delete Image
+  Future<void> deleteImage() async {
+    try {
+      final Reference imageRef = FirebaseStorage.instance.refFromURL(imageUrl!);
+
+      await imageRef.delete();
+    } catch (e) {
+      print('Error deleting image: $e');
+    }
+  }
+
+  //Delete Data
+  void deleteData(String uId) async {
+    await FirebaseFirestore.instance.collection('Articles').doc(uId).delete();
   }
 
   @override
@@ -247,26 +266,54 @@ class _ViewArticleAdminState extends State<ViewArticleAdmin> {
               const SizedBox(
                 height: 10,
               ),
-              Container(
-                height: 55,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.redAccent,
-                  boxShadow: const [
-                    BoxShadow(
-                      offset: Offset(0, 4.0),
-                      blurRadius: 4.0,
-                      color: Color.fromARGB(63, 0, 0, 0),
-                    ),
-                  ],
-                ),
-                child: const Center(
-                  child: Text(
-                    'Delete',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
-                    ),
+              GestureDetector(
+                onTap: () {
+                  deleteImage().then((_) {
+                    print('Deleted Sucess!');
+                    setState(() {
+                      isClicked = false;
+                    });
+                    deleteData(id!);
+                  });
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Article Delete Sucesss!')),
+                  );
+
+                  setState(() {
+                    isClicked = false;
+                  });
+
+                  Future.delayed(const Duration(seconds: 1), () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ArticleListAdmin()),
+                    );
+                  });
+                },
+                child: Container(
+                  height: 55,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.redAccent,
+                    boxShadow: const [
+                      BoxShadow(
+                        offset: Offset(0, 4.0),
+                        blurRadius: 4.0,
+                        color: Color.fromARGB(63, 0, 0, 0),
+                      ),
+                    ],
+                  ),
+                  child: Center(
+                    child: isClicked
+                        ? CircularProgressIndicator()
+                        : Text(
+                            'Delete',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white,
+                            ),
+                          ),
                   ),
                 ),
               ),
