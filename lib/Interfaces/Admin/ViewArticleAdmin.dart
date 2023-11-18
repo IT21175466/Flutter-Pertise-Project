@@ -60,7 +60,7 @@ class _ViewArticleAdminState extends State<ViewArticleAdmin> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                height: 150,
+                height: 200,
                 decoration: BoxDecoration(
                   border: Border.all(
                     width: 2,
