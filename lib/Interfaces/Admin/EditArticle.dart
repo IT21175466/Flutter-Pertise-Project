@@ -17,6 +17,7 @@ class EditArticle extends StatefulWidget {
 }
 
 class _EditArticleState extends State<EditArticle> {
+  bool tapOnImage = false;
   bool isClicked = false;
   bool uploaded = false;
   String docID = '';
@@ -53,6 +54,9 @@ class _EditArticleState extends State<EditArticle> {
   File? _selectedImage;
 
   Future _getImageFromGallery() async {
+    setState(() {
+      isClicked = true;
+    });
     final imagePicker = ImagePicker();
     final pickedImage = await imagePicker.pickImage(
         source: ImageSource.gallery, imageQuality: 60);
@@ -76,6 +80,7 @@ class _EditArticleState extends State<EditArticle> {
 
       setState(() {
         uploaded == true;
+        isClicked = false;
       });
     } catch (e) {
       print(e);
@@ -230,6 +235,17 @@ class _EditArticleState extends State<EditArticle> {
     });
   }
 
+  //Delete Image
+  Future<void> deleteImage(String docID) async {
+    try {
+      final Reference imageRef = FirebaseStorage.instance.refFromURL(imageUrl);
+
+      await imageRef.delete();
+    } catch (e) {
+      print('Error deleting image: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -252,33 +268,44 @@ class _EditArticleState extends State<EditArticle> {
             children: [
               GestureDetector(
                 onTap: () {
-                  _getImageFromGallery();
+                  setState(() {
+                    tapOnImage = true;
+                  });
+                  deleteImage(docID).then((_) {
+                    print('Deleted Sucess!');
+                    setState(() {
+                      tapOnImage = false;
+                    });
+                    _getImageFromGallery();
+                  });
                 },
-                child: Container(
-                  height: 150,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 2,
-                      color: const Color.fromARGB(255, 0, 74, 173),
-                    ),
-                    borderRadius: BorderRadius.circular(10.0),
-                    image: _selectedImage != null
-                        ? DecorationImage(
-                            image: FileImage(_selectedImage!),
-                            fit: BoxFit.cover,
-                          )
-                        : DecorationImage(
-                            image: NetworkImage('$imageUrl'),
-                            fit: BoxFit.cover,
+                child: tapOnImage
+                    ? Text('Please Wait....')
+                    : Container(
+                        height: 150,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 2,
+                            color: const Color.fromARGB(255, 0, 74, 173),
                           ),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      "Add Image Here\n(Tap to add a Image)",
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
+                          borderRadius: BorderRadius.circular(10.0),
+                          image: _selectedImage != null
+                              ? DecorationImage(
+                                  image: FileImage(_selectedImage!),
+                                  fit: BoxFit.cover,
+                                )
+                              : DecorationImage(
+                                  image: NetworkImage('$imageUrl'),
+                                  fit: BoxFit.cover,
+                                ),
+                        ),
+                        child: const Center(
+                          child: Text(
+                            "Add Image Here\n(Tap to add a Image)",
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
               ),
               const SizedBox(
                 height: 10,

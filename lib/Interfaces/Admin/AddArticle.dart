@@ -53,6 +53,9 @@ class _AddArticleState extends State<AddArticle> {
   File? _selectedImage;
 
   Future _getImageFromGallery() async {
+    setState(() {
+      isClicked = true;
+    });
     final imagePicker = ImagePicker();
     final pickedImage = await imagePicker.pickImage(
         source: ImageSource.gallery, imageQuality: 60);
@@ -76,6 +79,7 @@ class _AddArticleState extends State<AddArticle> {
 
       setState(() {
         uploaded == true;
+        isClicked = false;
       });
     } catch (e) {
       print(e);
