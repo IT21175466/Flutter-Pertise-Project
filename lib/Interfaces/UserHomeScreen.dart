@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sexpertise/Interfaces/User/ArticlelListUser.dart';
 import 'package:sexpertise/Interfaces/UserQuizList.dart';
 
 class UserHomeScreen extends StatefulWidget {
@@ -52,7 +53,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
           children: [
             Column(
               children: [
-                Align(
+                const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
                     "Hello,",
@@ -66,7 +67,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                 Align(
                   alignment: Alignment.bottomLeft,
                   child: isLoading
-                      ? Text(
+                      ? const Text(
                           '',
                           style: TextStyle(
                             fontSize: 16,
@@ -75,7 +76,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                         )
                       : Text(
                           '$userName',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w700,
                           ),
@@ -83,8 +84,8 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                 ),
               ],
             ),
-            Spacer(),
-            Icon(
+            const Spacer(),
+            const Icon(
               Icons.notifications_outlined,
               size: 35,
               color: Color.fromARGB(255, 0, 74, 173),
@@ -94,16 +95,17 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
         backgroundColor: const Color.fromARGB(255, 244, 246, 255),
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
         child: Column(
           children: [
-            Spacer(),
+            const Spacer(),
             //1st Row
             Row(
               children: [
-                Spacer(),
+                const Spacer(),
                 Container(
-                  padding: EdgeInsets.symmetric(vertical: 35, horizontal: 35),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 35, horizontal: 35),
                   height: 150,
                   width: 150,
                   decoration: BoxDecoration(
@@ -112,29 +114,38 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                   ),
                   child: Image.asset('lib/Assets/chatbot.png'),
                 ),
-                Spacer(),
-                Container(
-                  padding: EdgeInsets.symmetric(vertical: 35, horizontal: 35),
-                  height: 150,
-                  width: 150,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
+                const Spacer(),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const UserArticleList()));
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 35, horizontal: 35),
+                    height: 150,
+                    width: 150,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Image.asset('lib/Assets/blogging.png'),
                   ),
-                  child: Image.asset('lib/Assets/blogging.png'),
                 ),
-                Spacer(),
+                const Spacer(),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
               children: [
-                Spacer(),
+                const Spacer(),
                 Container(
                   width: 150,
-                  child: Center(
+                  child: const Center(
                     child: Text(
                       'Chatbot',
                       style: TextStyle(
@@ -144,10 +155,10 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                     ),
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 Container(
                   width: 150,
-                  child: Center(
+                  child: const Center(
                     child: Text(
                       'Read Blogs',
                       style: TextStyle(
@@ -157,18 +168,19 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                     ),
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
               ],
             ),
 
-            Spacer(),
+            const Spacer(),
 
             //2nd Row
             Row(
               children: [
-                Spacer(),
+                const Spacer(),
                 Container(
-                  padding: EdgeInsets.symmetric(vertical: 35, horizontal: 35),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 35, horizontal: 35),
                   height: 150,
                   width: 150,
                   decoration: BoxDecoration(
@@ -177,16 +189,17 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                   ),
                   child: Image.asset('lib/Assets/video.png'),
                 ),
-                Spacer(),
+                const Spacer(),
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => UserQuizList()));
+                            builder: (context) => const UserQuizList()));
                   },
                   child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 35, horizontal: 35),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 35, horizontal: 35),
                     height: 150,
                     width: 150,
                     decoration: BoxDecoration(
@@ -196,18 +209,18 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                     child: Image.asset('lib/Assets/quiz.png'),
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
               children: [
-                Spacer(),
+                const Spacer(),
                 Container(
                   width: 150,
-                  child: Center(
+                  child: const Center(
                     child: Text(
                       'Watch Videos',
                       style: TextStyle(
@@ -217,10 +230,10 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                     ),
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 Container(
                   width: 150,
-                  child: Center(
+                  child: const Center(
                     child: Text(
                       'Quizzes',
                       style: TextStyle(
@@ -230,18 +243,19 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                     ),
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
               ],
             ),
 
             //3rd Row
-            Spacer(),
+            const Spacer(),
 
             Row(
               children: [
-                Spacer(),
+                const Spacer(),
                 Container(
-                  padding: EdgeInsets.symmetric(vertical: 35, horizontal: 35),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 35, horizontal: 35),
                   height: 150,
                   width: 150,
                   decoration: BoxDecoration(
@@ -250,9 +264,10 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                   ),
                   child: Image.asset('lib/Assets/review.png'),
                 ),
-                Spacer(),
+                const Spacer(),
                 Container(
-                  padding: EdgeInsets.symmetric(vertical: 35, horizontal: 35),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 35, horizontal: 35),
                   height: 150,
                   width: 150,
                   decoration: BoxDecoration(
@@ -261,18 +276,18 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                   ),
                   child: Image.asset('lib/Assets/settings.png'),
                 ),
-                Spacer(),
+                const Spacer(),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
               children: [
-                Spacer(),
+                const Spacer(),
                 Container(
                   width: 150,
-                  child: Center(
+                  child: const Center(
                     child: Text(
                       'Add Reviews',
                       style: TextStyle(
@@ -282,10 +297,10 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                     ),
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 Container(
                   width: 150,
-                  child: Center(
+                  child: const Center(
                     child: Text(
                       'Settings',
                       style: TextStyle(
@@ -295,10 +310,10 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                     ),
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
               ],
             ),
-            Spacer(),
+            const Spacer(),
           ],
         ),
       ),
