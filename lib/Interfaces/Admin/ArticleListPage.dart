@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sexpertise/Interfaces/Admin/AddArticle.dart';
+import 'package:sexpertise/Interfaces/Admin/ViewArticleAdmin.dart';
 
 class ArticleListAdmin extends StatefulWidget {
   const ArticleListAdmin({super.key});
@@ -126,12 +127,12 @@ class _ArticleListAdminState extends State<ArticleListAdmin> {
                                       docs[index]['Article_ID'].toString();
                                   print(selectedIndex);
 
-                                  // Navigator.of(context).push(
-                                  //   MaterialPageRoute(
-                                  //     builder: (context) =>
-                                  //         SingleRecord(id: selectedIndex),
-                                  //   ),
-                                  // );
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          ViewArticleAdmin(id: selectedIndex),
+                                    ),
+                                  );
                                 });
                               },
                               child: Container(
@@ -297,12 +298,12 @@ class _ArticleListAdminState extends State<ArticleListAdmin> {
                                       docs[index]['Article_ID'].toString();
                                   print(selectedIndex);
 
-                                  // Navigator.of(context).push(
-                                  //   MaterialPageRoute(
-                                  //     builder: (context) =>
-                                  //         SingleRecord(id: selectedIndex),
-                                  //   ),
-                                  // );
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          ViewArticleAdmin(id: selectedIndex),
+                                    ),
+                                  );
                                 });
                               },
                               child: Container(
