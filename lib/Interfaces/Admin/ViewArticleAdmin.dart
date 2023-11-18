@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:sexpertise/Interfaces/Admin/EditArticle.dart';
 
 class ViewArticleAdmin extends StatefulWidget {
   final String? id;
@@ -211,25 +212,34 @@ class _ViewArticleAdminState extends State<ViewArticleAdmin> {
               const SizedBox(
                 height: 30,
               ),
-              Container(
-                height: 55,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: const Color.fromARGB(255, 35, 60, 135),
-                  boxShadow: const [
-                    BoxShadow(
-                      offset: Offset(0, 4.0),
-                      blurRadius: 4.0,
-                      color: Color.fromARGB(63, 0, 0, 0),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => EditArticle(id: widget.id),
                     ),
-                  ],
-                ),
-                child: const Center(
-                  child: Text(
-                    'Edit',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
+                  );
+                },
+                child: Container(
+                  height: 55,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: const Color.fromARGB(255, 35, 60, 135),
+                    boxShadow: const [
+                      BoxShadow(
+                        offset: Offset(0, 4.0),
+                        blurRadius: 4.0,
+                        color: Color.fromARGB(63, 0, 0, 0),
+                      ),
+                    ],
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'Edit',
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
