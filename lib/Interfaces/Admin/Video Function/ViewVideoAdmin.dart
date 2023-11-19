@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sexpertise/Interfaces/Admin/Video%20Function/EditVideo.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class ViewVideoAdmin extends StatefulWidget {
@@ -95,94 +96,83 @@ class _ViewVideoAdminState extends State<ViewVideoAdmin> {
               ),
               Text('$description'),
               const SizedBox(
-                height: 20,
+                height: 30,
               ),
-              //  GestureDetector(
-              //     onTap: () {
-              //       Navigator.of(context).push(
-              //         MaterialPageRoute(
-              //           builder: (context) => EditArticle(id: widget.id),
-              //         ),
-              //       );
-              //     },
-              //     child: Container(
-              //       height: 55,
-              //       decoration: BoxDecoration(
-              //         borderRadius: BorderRadius.circular(10),
-              //         color: const Color.fromARGB(255, 35, 60, 135),
-              //         boxShadow: const [
-              //           BoxShadow(
-              //             offset: Offset(0, 4.0),
-              //             blurRadius: 4.0,
-              //             color: Color.fromARGB(63, 0, 0, 0),
-              //           ),
-              //         ],
-              //       ),
-              //       child: const Center(
-              //         child: Text(
-              //           'Edit',
-              //           style: TextStyle(
-              //             fontSize: 20,
-              //             color: Colors.white,
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //   ),
-              //   const SizedBox(
-              //     height: 10,
-              //   ),
-              //   GestureDetector(
-              //     onTap: () {
-              //       deleteImage().then((_) {
-              //         print('Deleted Sucess!');
-              //         setState(() {
-              //           isClicked = false;
-              //         });
-              //         deleteData(id!);
-              //       });
-              //       ScaffoldMessenger.of(context).showSnackBar(
-              //         SnackBar(content: Text('Article Delete Sucesss!')),
-              //       );
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => EditVideo(id: widget.id),
+                    ),
+                  );
+                },
+                child: Container(
+                  height: 55,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: const Color.fromARGB(255, 35, 60, 135),
+                    boxShadow: const [
+                      BoxShadow(
+                        offset: Offset(0, 4.0),
+                        blurRadius: 4.0,
+                        color: Color.fromARGB(63, 0, 0, 0),
+                      ),
+                    ],
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'Edit',
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    isClicked = false;
+                  });
 
-              //       setState(() {
-              //         isClicked = false;
-              //       });
-
-              //       Future.delayed(const Duration(seconds: 1), () {
-              //         Navigator.pushReplacement(
-              //           context,
-              //           MaterialPageRoute(
-              //               builder: (context) => ArticleListAdmin()),
-              //         );
-              //       });
-              //     },
-              //     child: Container(
-              //       height: 55,
-              //       decoration: BoxDecoration(
-              //         borderRadius: BorderRadius.circular(10),
-              //         color: Colors.redAccent,
-              //         boxShadow: const [
-              //           BoxShadow(
-              //             offset: Offset(0, 4.0),
-              //             blurRadius: 4.0,
-              //             color: Color.fromARGB(63, 0, 0, 0),
-              //           ),
-              //         ],
-              //       ),
-              //       child: Center(
-              //         child: isClicked
-              //             ? CircularProgressIndicator()
-              //             : Text(
-              //                 'Delete',
-              //                 style: TextStyle(
-              //                   fontSize: 20,
-              //                   color: Colors.white,
-              //                 ),
-              //               ),
-              //       ),
-              //     ),
-              //   ),
+                  // Future.delayed(const Duration(seconds: 1), () {
+                  //   Navigator.pushReplacement(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => ArticleListAdmin()),
+                  //   );
+                  // });
+                },
+                child: Container(
+                  height: 55,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.redAccent,
+                    boxShadow: const [
+                      BoxShadow(
+                        offset: Offset(0, 4.0),
+                        blurRadius: 4.0,
+                        color: Color.fromARGB(63, 0, 0, 0),
+                      ),
+                    ],
+                  ),
+                  child: Center(
+                    child: isClicked
+                        ? CircularProgressIndicator()
+                        : Text(
+                            'Delete',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white,
+                            ),
+                          ),
+                  ),
+                ),
+              ),
               const SizedBox(
                 height: 20,
               ),

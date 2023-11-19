@@ -1,83 +1,66 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sexpertise/Interfaces/Admin/Video%20Function/VideoListPage.dart';
-import 'package:uuid/uuid.dart';
 
-class AddVideo extends StatefulWidget {
-  const AddVideo({super.key});
+class EditVideo extends StatefulWidget {
+  final String? id;
+  const EditVideo({super.key, required this.id});
 
   @override
-  State<AddVideo> createState() => _AddVideoState();
+  State<EditVideo> createState() => _EditVideoState();
 }
 
-class _AddVideoState extends State<AddVideo> {
-  String docID = '';
+class _EditVideoState extends State<EditVideo> {
   bool isClicked = false;
-
-  //Generate ID
-  String generateRandomId() {
-    var uuid = Uuid();
-    return uuid.v4();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    docID = generateRandomId();
-  }
+  String docID = '';
 
   TextEditingController _topicController = TextEditingController();
   TextEditingController _videoController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
 
-  //Check Credentials
-  void _wrongCredentials() {
-    if (Platform.isIOS) {
-      showCupertinoDialog(
-        context: context,
-        builder: (BuildContext dialogContext) {
-          return CupertinoAlertDialog(
-            title: Text("Credential Error"),
-            content: Text("Please fill all the required fields."),
-            actions: <Widget>[
-              CupertinoDialogAction(
-                child: Text("OK"),
-                onPressed: () {
-                  Navigator.of(dialogContext).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
-    } else {
-      showDialog(
-        context: context,
-        builder: (BuildContext dialogContext) {
-          return AlertDialog(
-            title: Text("Credential Error"),
-            content: Text("Please fill all the required fields."),
-            actions: <Widget>[
-              TextButton(
-                child: Text("OK"),
-                onPressed: () {
-                  Navigator.of(dialogContext).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
-    }
+  @override
+  void initState() {
+    super.initState();
+
+    docID = widget.id!;
+    getData(docID);
   }
 
-  //Create Firebase Collection
-  Future addVideo(String topic, String video, String description) async {
-    await FirebaseFirestore.instance.collection('Videos').doc(docID).set({
+  void getData(String uId) async {
+    final DocumentSnapshot videoDoc =
+        await FirebaseFirestore.instance.collection("Videos").doc(uId).get();
+
+    setState(() {
+      _topicController.text = videoDoc.get('Topic');
+      _descriptionController.text = videoDoc.get('Description');
+      _videoController.text = videoDoc.get('Video_Link');
+    });
+  }
+
+  //Check Credentials
+  void _wrongCredentials() {
+    showDialog(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          title: Text("Credential Error"),
+          content: Text("Please fill all the required fields."),
+          actions: <Widget>[
+            TextButton(
+              child: Text("OK"),
+              onPressed: () {
+                Navigator.of(dialogContext).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future updateVideo(String topic, String video, String description) async {
+    await FirebaseFirestore.instance.collection('Videos').doc(docID).update({
       'Video_ID': docID,
       'Video_Link': video,
       'Topic': topic,
@@ -91,11 +74,11 @@ class _AddVideoState extends State<AddVideo> {
       isClicked = true;
     });
     try {
-      addVideo(_topicController.text, _videoController.text.trim(),
+      updateVideo(_topicController.text, _videoController.text.trim(),
           _descriptionController.text);
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Video Added Sucesss!')),
+        SnackBar(content: Text('Video Updated Sucesss!')),
       );
 
       setState(() {
@@ -131,7 +114,7 @@ class _AddVideoState extends State<AddVideo> {
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
-          "Add Video",
+          "Edit Video",
           style: TextStyle(
             fontWeight: FontWeight.w500,
             fontSize: 24,
@@ -243,7 +226,7 @@ class _AddVideoState extends State<AddVideo> {
                       ? CircularProgressIndicator()
                       : Center(
                           child: Text(
-                            'Submit',
+                            'Save Changes',
                             style: TextStyle(
                               fontSize: 20,
                               color: Colors.white,
