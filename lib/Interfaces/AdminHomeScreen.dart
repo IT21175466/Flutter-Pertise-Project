@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:sexpertise/Interfaces/Admin/ArticleListPage.dart';
+import 'package:sexpertise/Interfaces/Admin/Blog%20Function/ArticleListPage.dart';
 import 'package:sexpertise/Interfaces/AdminQuizList.dart';
 
 class AdminHomeScreen extends StatefulWidget {
