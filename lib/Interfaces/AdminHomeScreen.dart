@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sexpertise/Interfaces/Admin/Blog%20Function/ArticleListPage.dart';
+import 'package:sexpertise/Interfaces/Admin/Video%20Function/VideoListPage.dart';
 import 'package:sexpertise/Interfaces/AdminQuizList.dart';
 
 class AdminHomeScreen extends StatefulWidget {
@@ -196,16 +197,24 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                   ),
                 ),
                 const Spacer(),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 35, horizontal: 35),
-                  height: 150,
-                  width: 150,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => VideoListPage()));
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 35, horizontal: 35),
+                    height: 150,
+                    width: 150,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Image.asset('lib/Assets/video.png'),
                   ),
-                  child: Image.asset('lib/Assets/video.png'),
                 ),
                 const Spacer(),
               ],
