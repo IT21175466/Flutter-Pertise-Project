@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:sexpertise/Interfaces/Admin/ArticleListPage.dart';
-import 'package:sexpertise/Interfaces/Admin/EditArticle.dart';
+import 'package:sexpertise/Interfaces/Admin/Blog%20Function/ArticleListPage.dart';
+import 'package:sexpertise/Interfaces/Admin/Blog%20Function/EditArticle.dart';
 
 class ViewArticleAdmin extends StatefulWidget {
   final String? id;

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:sexpertise/Interfaces/Admin/AddArticle.dart';
-import 'package:sexpertise/Interfaces/Admin/ViewArticleAdmin.dart';
+import 'package:sexpertise/Interfaces/Admin/Blog%20Function/AddArticle.dart';
+import 'package:sexpertise/Interfaces/Admin/Blog%20Function/ViewArticleAdmin.dart';
 
 class ArticleListAdmin extends StatefulWidget {
   const ArticleListAdmin({super.key});

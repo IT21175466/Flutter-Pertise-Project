@@ -3,51 +3,50 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chip_tags/flutter_chip_tags.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:sexpertise/Interfaces/Admin/ArticleListPage.dart';
+import 'package:sexpertise/Interfaces/Admin/Blog%20Function/ArticleListPage.dart';
+import 'package:uuid/uuid.dart';
 
-class EditArticle extends StatefulWidget {
-  final String? id;
-  const EditArticle({super.key, required this.id});
+class AddArticle extends StatefulWidget {
+  const AddArticle({super.key});
 
   @override
-  State<EditArticle> createState() => _EditArticleState();
+  State<AddArticle> createState() => _AddArticleState();
 }
 
-class _EditArticleState extends State<EditArticle> {
-  bool tapOnImage = false;
+class _AddArticleState extends State<AddArticle> {
   bool isClicked = false;
   bool uploaded = false;
   String docID = '';
   String imageUrl = '';
 
-  List<String> _myList = [];
-
-  //String? id;
+  //Generate ID
+  String generateRandomId() {
+    var uuid = Uuid();
+    return uuid.v4();
+  }
 
   @override
   void initState() {
     super.initState();
-
-    docID = widget.id!;
-    getData(docID);
+    docID = generateRandomId();
   }
 
   TextEditingController _topicController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
 
-  void getData(String uId) async {
-    final DocumentSnapshot articleDoc =
-        await FirebaseFirestore.instance.collection("Articles").doc(uId).get();
+  //Tags
+  List<String> _myList = [];
 
-    setState(() {
-      _topicController.text = articleDoc.get('Topic');
-      _descriptionController.text = articleDoc.get('Description');
-      imageUrl = articleDoc.get('Image');
-      _myList = List<String>.from(articleDoc.get('Tags') ?? []);
-    });
+  void checkTagsLimit() {
+    if (_myList.length == 5) {
+      print('The list has exactly 5 elements.');
+    } else {
+      print('The list does not have 5 elements.');
+    }
   }
 
   //Image
@@ -89,26 +88,46 @@ class _EditArticleState extends State<EditArticle> {
 
   //Check Credentials
   void _wrongCredentials() {
-    showDialog(
-      context: context,
-      builder: (BuildContext dialogContext) {
-        return AlertDialog(
-          title: Text("Credential Error"),
-          content: Text("Please fill all the required fields."),
-          actions: <Widget>[
-            TextButton(
-              child: Text("OK"),
-              onPressed: () {
-                Navigator.of(dialogContext).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
+    if (Platform.isIOS) {
+      showCupertinoDialog(
+        context: context,
+        builder: (BuildContext dialogContext) {
+          return CupertinoAlertDialog(
+            title: Text("Credential Error"),
+            content: Text("Please fill all the required fields."),
+            actions: <Widget>[
+              CupertinoDialogAction(
+                child: Text("OK"),
+                onPressed: () {
+                  Navigator.of(dialogContext).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext dialogContext) {
+          return AlertDialog(
+            title: Text("Credential Error"),
+            content: Text("Please fill all the required fields."),
+            actions: <Widget>[
+              TextButton(
+                child: Text("OK"),
+                onPressed: () {
+                  Navigator.of(dialogContext).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 
-//Check Length
+  //Check Length
   void chechTagsLength() {
     showDialog(
       context: context,
@@ -129,7 +148,7 @@ class _EditArticleState extends State<EditArticle> {
     );
   }
 
-//Enter Tags
+  //Enter Tags
   void enterTags() {
     showDialog(
       context: context,
@@ -150,7 +169,7 @@ class _EditArticleState extends State<EditArticle> {
     );
   }
 
-//Enter Image
+  //Enter Image
   void addImage() {
     showDialog(
       context: context,
@@ -171,18 +190,10 @@ class _EditArticleState extends State<EditArticle> {
     );
   }
 
-  void checkTagsLimit() {
-    if (_myList.length == 5) {
-      print('The list has exactly 5 elements.');
-    } else {
-      print('The list does not have 5 elements.');
-    }
-  }
-
-//update Firebase Collection
-  Future updateAdminArticle(String topic, String description,
-      List<String> myList, String imageUrl) async {
-    await FirebaseFirestore.instance.collection('Articles').doc(docID).update({
+  //Create Firebase Collection
+  Future addAdminArticle(String topic, String description, List<String> myList,
+      String imageUrl) async {
+    await FirebaseFirestore.instance.collection('Articles').doc(docID).set({
       'Article_ID': docID,
       'Topic': topic,
       'Description': description,
@@ -192,12 +203,12 @@ class _EditArticleState extends State<EditArticle> {
   }
 
   //Add Article to Firebase
-  Future updateArticelToFirebase() async {
+  Future AddArticelToFirebase() async {
     setState(() {
       isClicked = true;
     });
     try {
-      updateAdminArticle(
+      addAdminArticle(
         _topicController.text.trim(),
         _descriptionController.text.trim(),
         _myList,
@@ -205,18 +216,18 @@ class _EditArticleState extends State<EditArticle> {
       );
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Article Update Sucesss!')),
+        SnackBar(content: Text('Article Added Sucesss!')),
       );
+
+      setState(() {
+        isClicked = false;
+      });
 
       Future.delayed(const Duration(seconds: 1), () {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => ArticleListAdmin()),
         );
-      });
-
-      setState(() {
-        isClicked = false;
       });
     } on FirebaseAuthException catch (e) {
       print(e);
@@ -235,24 +246,13 @@ class _EditArticleState extends State<EditArticle> {
     });
   }
 
-  //Delete Image
-  Future<void> deleteImage() async {
-    try {
-      final Reference imageRef = FirebaseStorage.instance.refFromURL(imageUrl);
-
-      await imageRef.delete();
-    } catch (e) {
-      print('Error deleting image: $e');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
-          "Update Article",
+          "Add Article",
           style: TextStyle(
             fontWeight: FontWeight.w500,
             fontSize: 24,
@@ -268,44 +268,33 @@ class _EditArticleState extends State<EditArticle> {
             children: [
               GestureDetector(
                 onTap: () {
-                  setState(() {
-                    tapOnImage = true;
-                  });
-                  deleteImage().then((_) {
-                    print('Deleted Sucess!');
-                    setState(() {
-                      tapOnImage = false;
-                    });
-                    _getImageFromGallery();
-                  });
+                  _getImageFromGallery();
                 },
-                child: tapOnImage
-                    ? Text('Please Wait....')
-                    : Container(
-                        height: 150,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            width: 2,
-                            color: const Color.fromARGB(255, 0, 74, 173),
+                child: Container(
+                  height: 150,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 2,
+                      color: const Color.fromARGB(255, 0, 74, 173),
+                    ),
+                    borderRadius: BorderRadius.circular(10.0),
+                    image: _selectedImage != null
+                        ? DecorationImage(
+                            image: FileImage(_selectedImage!),
+                            fit: BoxFit.cover,
+                          )
+                        : const DecorationImage(
+                            image: AssetImage('lib/Assets/cover.jpg'),
+                            fit: BoxFit.cover,
                           ),
-                          borderRadius: BorderRadius.circular(10.0),
-                          image: _selectedImage != null
-                              ? DecorationImage(
-                                  image: FileImage(_selectedImage!),
-                                  fit: BoxFit.cover,
-                                )
-                              : DecorationImage(
-                                  image: NetworkImage('$imageUrl'),
-                                  fit: BoxFit.cover,
-                                ),
-                        ),
-                        child: const Center(
-                          child: Text(
-                            "Add Image Here\n(Tap to add a Image)",
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      "Add Image Here\n(Tap to add a Image)",
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
               ),
               const SizedBox(
                 height: 10,
@@ -397,7 +386,7 @@ class _EditArticleState extends State<EditArticle> {
                       // else if (_selectedImage != null) {
                       //   addImage();
                     } else {
-                      updateArticelToFirebase();
+                      AddArticelToFirebase();
                     }
                   },
                   child: Container(
@@ -417,7 +406,7 @@ class _EditArticleState extends State<EditArticle> {
                       child: isClicked
                           ? CircularProgressIndicator()
                           : Text(
-                              'Save Changes',
+                              'Submit',
                               style: TextStyle(
                                 fontSize: 20,
                                 color: Colors.white,
