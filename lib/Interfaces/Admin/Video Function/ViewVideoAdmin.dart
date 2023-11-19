@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sexpertise/Interfaces/Admin/Video%20Function/EditVideo.dart';
+import 'package:sexpertise/Interfaces/Admin/Video%20Function/VideoListPage.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class ViewVideoAdmin extends StatefulWidget {
@@ -51,6 +52,11 @@ class _ViewVideoAdminState extends State<ViewVideoAdmin> {
     });
 
     print(videoID);
+  }
+
+  //Delete Video
+  void deleteData(String uId) async {
+    await FirebaseFirestore.instance.collection('Videos').doc(uId).delete();
   }
 
   @override
@@ -135,17 +141,14 @@ class _ViewVideoAdminState extends State<ViewVideoAdmin> {
               ),
               GestureDetector(
                 onTap: () {
-                  setState(() {
-                    isClicked = false;
-                  });
+                  deleteData(id!);
 
-                  // Future.delayed(const Duration(seconds: 1), () {
-                  //   Navigator.pushReplacement(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: (context) => ArticleListAdmin()),
-                  //   );
-                  // });
+                  Future.delayed(const Duration(seconds: 1), () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => VideoListPage()),
+                    );
+                  });
                 },
                 child: Container(
                   height: 55,
