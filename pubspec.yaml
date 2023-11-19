@@ -45,6 +45,7 @@ dependencies:
   image_picker: ^0.8.3+3
   flutter_chip_tags: ^2.0.2
   firebase_storage: ^11.5.1
+  youtube_player_flutter: ^8.1.2
 
 dev_dependencies:
   flutter_test:

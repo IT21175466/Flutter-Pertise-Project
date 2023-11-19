@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sexpertise/Interfaces/Admin/Video%20Function/AddVideo.dart';
+import 'package:sexpertise/Interfaces/Admin/Video%20Function/ViewVideoAdmin.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class VideoListPage extends StatefulWidget {
   const VideoListPage({super.key});
@@ -14,6 +16,7 @@ class _VideoListPageState extends State<VideoListPage> {
   final _videos = FirebaseFirestore.instance.collection('Videos').snapshots();
 
   String selectedIndex = '';
+  String videoId = '';
 
   TextEditingController _search = TextEditingController();
   String search = '';
@@ -127,14 +130,20 @@ class _VideoListPageState extends State<VideoListPage> {
                                 setState(() {
                                   selectedIndex =
                                       docs[index]['Video_ID'].toString();
-                                  print(selectedIndex);
 
-                                  // Navigator.of(context).push(
-                                  //   MaterialPageRoute(
-                                  //     builder: (context) =>
-                                  //         ViewArticleAdmin(id: selectedIndex),
-                                  //   ),
-                                  // );
+                                  videoId = YoutubePlayer.convertUrlToId(
+                                      docs[index]['Video_Link'].toString())!;
+                                  print(selectedIndex);
+                                  print(videoId);
+
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewVideoAdmin(
+                                        id: selectedIndex,
+                                        videoID: videoId,
+                                      ),
+                                    ),
+                                  );
                                 });
                               },
                               child: Container(
@@ -199,18 +208,24 @@ class _VideoListPageState extends State<VideoListPage> {
                                 setState(() {
                                   selectedIndex =
                                       docs[index]['Video_ID'].toString();
-                                  print(selectedIndex);
+                                  videoId = YoutubePlayer.convertUrlToId(
+                                      docs[index]['Video_Link'].toString())!;
 
-                                  // Navigator.of(context).push(
-                                  //   MaterialPageRoute(
-                                  //     builder: (context) =>
-                                  //         ViewArticleAdmin(id: selectedIndex),
-                                  //   ),
-                                  // );
+                                  print(selectedIndex);
+                                  print(videoId);
+
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewVideoAdmin(
+                                        id: selectedIndex,
+                                        videoID: videoId,
+                                      ),
+                                    ),
+                                  );
                                 });
                               },
                               child: Container(
-                                height: 110,
+                                height: 80,
                                 decoration: BoxDecoration(
                                   color:
                                       const Color.fromARGB(255, 244, 243, 243),

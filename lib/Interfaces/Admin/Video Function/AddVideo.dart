@@ -91,7 +91,7 @@ class _AddVideoState extends State<AddVideo> {
       isClicked = true;
     });
     try {
-      addVideo(_topicController.text, _videoController.text,
+      addVideo(_topicController.text, _videoController.text.trim(),
           _descriptionController.text);
 
       ScaffoldMessenger.of(context).showSnackBar(
