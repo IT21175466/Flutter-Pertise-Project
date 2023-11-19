@@ -82,6 +82,7 @@ flutter:
     - lib/Assets/quiz.png
     - lib/Assets/avatar2.jpg
     - lib/Assets/cover.jpg
+    - lib/Assets/video-player.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

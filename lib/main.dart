@@ -1,16 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:sexpertise/Interfaces/AddQuestion.dart';
-import 'package:sexpertise/Interfaces/Admin/AddArticle.dart';
-import 'package:sexpertise/Interfaces/Admin/ArticleListPage.dart';
-import 'package:sexpertise/Interfaces/AdminHomeScreen.dart';
-import 'package:sexpertise/Interfaces/AdminQuizList.dart';
-import 'package:sexpertise/Interfaces/QuizDoingPage.dart';
-import 'package:sexpertise/Interfaces/Settings.dart';
-import 'package:sexpertise/Interfaces/SignUPScreen.dart';
-import 'package:sexpertise/Interfaces/SplashScreen.dart';
-import 'package:sexpertise/Interfaces/UserHomeScreen.dart';
-import 'package:sexpertise/Interfaces/UserQuizList.dart';
+import 'package:sexpertise/Interfaces/Admin/Video%20Function/VideoListPage.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,7 +36,7 @@ class MyApp extends StatelessWidget {
         //colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: SplashScreen(),
+      home: VideoListPage(),
     );
   }
 }
