@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sexpertise/Interfaces/Settings.dart';
 import 'package:sexpertise/Interfaces/User/ArticlelListUser.dart';
 import 'package:sexpertise/Interfaces/User/VideoListUser.dart';
 import 'package:sexpertise/Interfaces/UserQuizList.dart';
@@ -16,6 +17,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   String? userName;
   bool isLoading = false;
+  String? userIDS;
 
   @override
   void initState() {
@@ -38,6 +40,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
 
     setState(() {
       userName = userDoc.get('Name');
+      userIDS = userDoc.get('User_ID');
       isLoading = false;
     });
   }
@@ -274,16 +277,26 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                   child: Image.asset('lib/Assets/review.png'),
                 ),
                 const Spacer(),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 35, horizontal: 35),
-                  height: 150,
-                  width: 150,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SettingsPage(
+                                  uID: userIDS,
+                                )));
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 35, horizontal: 35),
+                    height: 150,
+                    width: 150,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Image.asset('lib/Assets/settings.png'),
                   ),
-                  child: Image.asset('lib/Assets/settings.png'),
                 ),
                 const Spacer(),
               ],

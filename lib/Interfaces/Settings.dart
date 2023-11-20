@@ -1,26 +1,72 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:sexpertise/Interfaces/EditUserAccount.dart';
 
 class SettingsPage extends StatefulWidget {
-  const SettingsPage({super.key});
+  final String? uID;
+  const SettingsPage({super.key, required this.uID});
 
   @override
   State<SettingsPage> createState() => _SettingsPageState();
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  //
+  String? userName;
+  String? email;
+  String? birthday;
+  String? phoneNo;
+  String? image;
+  String? address;
+
+  //
+  String? userID;
   File? _selectedImage;
 
-  Future _getFrofileImageFromGallery() async {
-    final imagePicker = ImagePicker();
-    final pickedImage =
-        await imagePicker.pickImage(source: ImageSource.gallery);
-    if (pickedImage != null) {
-      setState(() {
-        _selectedImage = File(pickedImage.path);
-      });
-    }
+  @override
+  void initState() {
+    super.initState();
+    userID = widget.uID;
+    print(userID);
+    getUserData();
+  }
+
+  void getUserData() async {
+    User? user = _auth.currentUser;
+    //_uid = user?.uid;
+    print('${user!.email}');
+
+    final DocumentSnapshot userDoc = await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(user.uid)
+        .get();
+
+    setState(() {
+      userName = userDoc.get('Name');
+      email = userDoc.get('Email');
+      birthday = userDoc.get('Birth_Day');
+      phoneNo = userDoc.get('Phone_Number');
+      address = userDoc.get('Address');
+      image = userDoc.get('Profile_Image');
+
+      if (birthday!.isEmpty) {
+        birthday = 'Please Fill Details';
+      }
+      if (phoneNo!.isEmpty) {
+        phoneNo = 'Please Fill Details';
+      }
+      if (address!.isEmpty) {
+        address = 'Please Fill Details';
+      }
+      if (image!.isEmpty) {
+        image =
+            'https://firebasestorage.googleapis.com/v0/b/sexpertise-24866.appspot.com/o/images%2Fpngegg.png?alt=media&token=2f04d319-126c-4f10-a577-30238f33dc06';
+      }
+    });
   }
 
   @override
@@ -48,55 +94,34 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
 
               //Profile Image
-              GestureDetector(
-                onTap: () {
-                  _getFrofileImageFromGallery();
-                },
-                child: Container(
-                  width: 120,
-                  height: 120,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(100),
-                    border: Border.all(
-                      color: const Color.fromARGB(255, 0, 74, 173),
-                      width: 2,
-                    ),
-                    image: _selectedImage != null
-                        ? DecorationImage(
-                            image: FileImage(_selectedImage!),
-                            fit: BoxFit.cover,
-                          )
-                        : const DecorationImage(
-                            image: AssetImage('lib/Assets/avatar2.jpg'),
-                            fit: BoxFit.cover,
-                          ),
+              Container(
+                width: 120,
+                height: 120,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(100),
+                  border: Border.all(
+                    color: const Color.fromARGB(255, 0, 74, 173),
+                    width: 2,
                   ),
-                  child: _selectedImage != null
-                      ? null
-                      : const Center(
-                          child: Text(
-                            "Tap To Edit Image",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ),
+                  image: DecorationImage(
+                    image: NetworkImage('$image'),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               const SizedBox(
                 height: 10,
               ),
-              const Text(
-                "Jonathan Patterson",
+              Text(
+                '$userName',
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 20,
                 ),
               ),
-              const Text(
-                "hello@reallygreatsite.com",
+              Text(
+                '$email',
                 style: TextStyle(
                   fontWeight: FontWeight.w400,
                   fontSize: 20,
@@ -125,7 +150,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                 ],
               ),
-              const Row(
+              Row(
                 children: [
                   Icon(
                     Icons.person,
@@ -135,7 +160,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     width: 10,
                   ),
                   Text(
-                    "Jonathan Patterson",
+                    '$userName',
                     style: TextStyle(
                       fontWeight: FontWeight.w400,
                       fontSize: 20,
@@ -148,89 +173,89 @@ class _SettingsPageState extends State<SettingsPage> {
                 height: 15,
               ),
 
-              //Password
-              const Row(
-                children: [
-                  Icon(
-                    Icons.key,
-                    color: Color.fromARGB(255, 0, 74, 173),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    "Password :",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 20,
-                    ),
-                  ),
-                ],
-              ),
-              const Row(
-                children: [
-                  Icon(
-                    Icons.person,
-                    color: Colors.white,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    "*******",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 20,
-                    ),
-                  ),
-                ],
-              ),
+              // //Password
+              // const Row(
+              //   children: [
+              //     Icon(
+              //       Icons.key,
+              //       color: Color.fromARGB(255, 0, 74, 173),
+              //     ),
+              //     SizedBox(
+              //       width: 10,
+              //     ),
+              //     Text(
+              //       "Password :",
+              //       style: TextStyle(
+              //         fontWeight: FontWeight.w600,
+              //         fontSize: 20,
+              //       ),
+              //     ),
+              //   ],
+              // ),
+              // const Row(
+              //   children: [
+              //     Icon(
+              //       Icons.person,
+              //       color: Colors.white,
+              //     ),
+              //     SizedBox(
+              //       width: 10,
+              //     ),
+              //     Text(
+              //       "*******",
+              //       style: TextStyle(
+              //         fontWeight: FontWeight.w400,
+              //         fontSize: 20,
+              //       ),
+              //     ),
+              //   ],
+              // ),
 
-              const SizedBox(
-                height: 15,
-              ),
+              // const SizedBox(
+              //   height: 15,
+              // ),
 
-              //Re-type Password
-              const Row(
-                children: [
-                  Icon(
-                    Icons.key,
-                    color: Color.fromARGB(255, 0, 74, 173),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    "Re-Type Password :",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 20,
-                    ),
-                  ),
-                ],
-              ),
-              const Row(
-                children: [
-                  Icon(
-                    Icons.person,
-                    color: Colors.white,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    "*******",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 20,
-                    ),
-                  ),
-                ],
-              ),
+              // //Re-type Password
+              // const Row(
+              //   children: [
+              //     Icon(
+              //       Icons.key,
+              //       color: Color.fromARGB(255, 0, 74, 173),
+              //     ),
+              //     SizedBox(
+              //       width: 10,
+              //     ),
+              //     Text(
+              //       "Re-Type Password :",
+              //       style: TextStyle(
+              //         fontWeight: FontWeight.w600,
+              //         fontSize: 20,
+              //       ),
+              //     ),
+              //   ],
+              // ),
+              // const Row(
+              //   children: [
+              //     Icon(
+              //       Icons.person,
+              //       color: Colors.white,
+              //     ),
+              //     SizedBox(
+              //       width: 10,
+              //     ),
+              //     Text(
+              //       "*******",
+              //       style: TextStyle(
+              //         fontWeight: FontWeight.w400,
+              //         fontSize: 20,
+              //       ),
+              //     ),
+              //   ],
+              // ),
 
-              const SizedBox(
-                height: 15,
-              ),
+              // const SizedBox(
+              //   height: 15,
+              // ),
 
               //Birthday
               const Row(
@@ -251,7 +276,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                 ],
               ),
-              const Row(
+              Row(
                 children: [
                   Icon(
                     Icons.person,
@@ -261,7 +286,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     width: 10,
                   ),
                   Text(
-                    "23rd October 1993",
+                    "$birthday",
                     style: TextStyle(
                       fontWeight: FontWeight.w400,
                       fontSize: 20,
@@ -293,7 +318,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                 ],
               ),
-              const Row(
+              Row(
                 children: [
                   Icon(
                     Icons.person,
@@ -303,7 +328,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     width: 10,
                   ),
                   Text(
-                    "0701234567",
+                    "$phoneNo",
                     style: TextStyle(
                       fontWeight: FontWeight.w400,
                       fontSize: 20,
@@ -335,7 +360,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                 ],
               ),
-              const Row(
+              Row(
                 children: [
                   Icon(
                     Icons.person,
@@ -345,7 +370,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     width: 10,
                   ),
                   Text(
-                    "127/B, City Rd, Town",
+                    "$address",
                     style: TextStyle(
                       fontWeight: FontWeight.w400,
                       fontSize: 20,
@@ -359,34 +384,44 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
 
               //Save Button
-              Container(
-                height: 55,
-                // width: screenWidth - 30,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: const Color.fromARGB(255, 35, 60, 135),
-                  boxShadow: const [
-                    BoxShadow(
-                      offset: Offset(0, 4.0),
-                      blurRadius: 4.0,
-                      color: Color.fromARGB(63, 0, 0, 0),
-                    ),
-                  ],
-                ),
-                child: const Center(
-                  child: Text(
-                    'SAVE',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 20,
-                      color: Colors.white,
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => EditUserAccount(
+                                userIDE: userID!,
+                              )));
+                },
+                child: Container(
+                  height: 55,
+                  // width: screenWidth - 30,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: const Color.fromARGB(255, 35, 60, 135),
+                    boxShadow: const [
+                      BoxShadow(
+                        offset: Offset(0, 4.0),
+                        blurRadius: 4.0,
+                        color: Color.fromARGB(63, 0, 0, 0),
+                      ),
+                    ],
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'Edit Details',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 20,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
               ),
 
               const SizedBox(
-                height: 30,
+                height: 25,
               ),
             ],
           ),
