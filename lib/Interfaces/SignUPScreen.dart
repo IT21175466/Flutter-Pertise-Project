@@ -111,6 +111,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
       'Name': name,
       'Role': 'User',
       'Email': email,
+      'Phone_Number': '',
+      'Birth_Day': '',
+      'Address': '',
+      'Profile_Image': '',
     });
   }
 
