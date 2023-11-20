@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:sexpertise/Interfaces/Settings.dart';
 
 class EditUserAccount extends StatefulWidget {
   final String userIDE;
@@ -286,8 +287,8 @@ class _EditUserAccountState extends State<EditUserAccount> {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => EditUserAccount(
-                                userIDE: userID!,
+                          builder: (context) => SettingsPage(
+                                uID: userID!,
                               )),
                     );
                   });
