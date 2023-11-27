@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sexpertise/Interfaces/Admin/AdminSettings.dart';
 import 'package:sexpertise/Interfaces/Admin/Blog%20Function/ArticleListPage.dart';
 import 'package:sexpertise/Interfaces/Admin/Video%20Function/VideoListPage.dart';
 import 'package:sexpertise/Interfaces/AdminQuizList.dart';
@@ -14,17 +15,24 @@ class AdminHomeScreen extends StatefulWidget {
 
 class _AdminHomeScreenState extends State<AdminHomeScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  String? adminName;
+  String? userName;
   bool isLoading = false;
+  String? userIDS;
+
+  @override
+  void initState() {
+    super.initState();
+    getUserData();
+    print(userIDS);
+  }
 
   void getUserData() async {
     setState(() {
       isLoading = true;
     });
-
     User? user = _auth.currentUser;
     //_uid = user?.uid;
-    print('${user!.email}');
+    print('${user!.uid}');
 
     final DocumentSnapshot userDoc = await FirebaseFirestore.instance
         .collection('Users')
@@ -32,15 +40,10 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
         .get();
 
     setState(() {
-      adminName = userDoc.get('Name');
+      userName = userDoc.get('Name');
+      userIDS = user.uid;
       isLoading = false;
     });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    //getUserData();
   }
 
   @override
@@ -51,7 +54,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
           Icons.person_rounded,
           color: Color.fromARGB(255, 0, 74, 173),
         ),
-        title: const SingleChildScrollView(
+        title: SingleChildScrollView(
           child: Row(
             children: [
               Column(
@@ -80,7 +83,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                         //       )
                         //     :
                         Text(
-                      //'$adminName',
+                      //'$userName',
                       "Admin",
                       style: TextStyle(
                         fontSize: 16,
@@ -282,16 +285,26 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                   ),
                 ),
                 const Spacer(),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 35, horizontal: 35),
-                  height: 150,
-                  width: 150,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AdminSettings(
+                                  uID: userIDS,
+                                )));
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 35, horizontal: 35),
+                    height: 150,
+                    width: 150,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Image.asset('lib/Assets/settings.png'),
                   ),
-                  child: Image.asset('lib/Assets/settings.png'),
                 ),
                 const Spacer(),
               ],
