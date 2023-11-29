@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:sexpertise/Interfaces/Admin/Manage%20Admin/AdminList.dart';
 
 class SelectionPage extends StatefulWidget {
-  const SelectionPage({super.key});
+  final String? adminID;
+  const SelectionPage({super.key, required this.adminID});
 
   @override
   State<SelectionPage> createState() => _SelectionPageState();
@@ -25,23 +27,32 @@ class _SelectionPageState extends State<SelectionPage> {
           const SizedBox(
             height: 50,
           ),
-          Container(
-            height: 130,
-            margin: const EdgeInsets.all(15),
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: const Color.fromARGB(255, 0, 74, 173),
-              ),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: const Center(
-              child: Text(
-                "Admin\n Management",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          AdminList(adminID: widget.adminID)));
+            },
+            child: Container(
+              height: 130,
+              margin: const EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: const Color.fromARGB(255, 0, 74, 173),
                 ),
-                textAlign: TextAlign.center,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: const Center(
+                child: Text(
+                  "Admin\n Management",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
           ),

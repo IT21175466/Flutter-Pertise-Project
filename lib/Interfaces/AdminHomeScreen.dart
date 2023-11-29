@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sexpertise/Interfaces/Admin/AdminSettings.dart';
 import 'package:sexpertise/Interfaces/Admin/Blog%20Function/ArticleListPage.dart';
+import 'package:sexpertise/Interfaces/Admin/Manage%20Admin/AdminList.dart';
 import 'package:sexpertise/Interfaces/Admin/Video%20Function/VideoListPage.dart';
 import 'package:sexpertise/Interfaces/AdminQuizList.dart';
 
@@ -54,7 +55,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
           Icons.person_rounded,
           color: Color.fromARGB(255, 0, 74, 173),
         ),
-        title: SingleChildScrollView(
+        title: const SingleChildScrollView(
           child: Row(
             children: [
               Column(
@@ -125,16 +126,26 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                   child: Image.asset('lib/Assets/chatbot.png'),
                 ),
                 const Spacer(),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 35, horizontal: 35),
-                  height: 150,
-                  width: 150,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AdminList(
+                                  adminID: userIDS,
+                                )));
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 35, horizontal: 35),
+                    height: 150,
+                    width: 150,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Image.asset('lib/Assets/group.png'),
                   ),
-                  child: Image.asset('lib/Assets/group.png'),
                 ),
                 const Spacer(),
               ],
@@ -185,7 +196,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ArticleListAdmin()));
+                            builder: (context) => const ArticleListAdmin()));
                   },
                   child: Container(
                     padding: const EdgeInsets.symmetric(
@@ -205,7 +216,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => VideoListPage()));
+                            builder: (context) => const VideoListPage()));
                   },
                   child: Container(
                     padding: const EdgeInsets.symmetric(
