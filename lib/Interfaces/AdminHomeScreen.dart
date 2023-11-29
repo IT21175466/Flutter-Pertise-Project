@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sexpertise/Interfaces/Admin/AdminSettings.dart';
 import 'package:sexpertise/Interfaces/Admin/Blog%20Function/ArticleListPage.dart';
-import 'package:sexpertise/Interfaces/Admin/Manage%20Admin/AdminList.dart';
+import 'package:sexpertise/Interfaces/Admin/Manage%20Admin/SelectionPage.dart';
 import 'package:sexpertise/Interfaces/Admin/Video%20Function/VideoListPage.dart';
 import 'package:sexpertise/Interfaces/AdminQuizList.dart';
 
@@ -131,7 +131,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => AdminList(
+                            builder: (context) => SelectionPage(
                                   adminID: userIDS,
                                 )));
                   },
