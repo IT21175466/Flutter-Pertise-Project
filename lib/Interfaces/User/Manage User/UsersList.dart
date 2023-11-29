@@ -1,40 +1,30 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:sexpertise/Interfaces/Admin/Manage%20Admin/AddAAdmin.dart';
 
-class AdminList extends StatefulWidget {
-  final String? adminID;
-  const AdminList({super.key, required this.adminID});
+class UsersList extends StatefulWidget {
+  const UsersList({super.key});
 
   @override
-  State<AdminList> createState() => _AdminListState();
+  State<UsersList> createState() => _UsersListState();
 }
 
-class _AdminListState extends State<AdminList> {
-  String? id;
-  @override
-  void initState() {
-    id = widget.adminID;
-    super.initState();
-  }
-
-  final _admins = FirebaseFirestore.instance
+class _UsersListState extends State<UsersList> {
+  final _users = FirebaseFirestore.instance
       .collection('Users')
-      .where('Role', isEqualTo: 'Admin')
+      .where('Role', isEqualTo: 'User')
       .snapshots();
 
   String selectedIndex = '';
 
   TextEditingController _search = TextEditingController();
   String search = '';
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
-          "Admins",
+          "Users",
           style: TextStyle(
             fontWeight: FontWeight.w500,
             fontSize: 24,
@@ -51,12 +41,12 @@ class _AdminListState extends State<AdminList> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const AddAAdmin(),
-                      ),
-                    );
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => const AddAAdmin(),
+                    //   ),
+                    // );
                   },
                   child: const Icon(
                     Icons.add_circle,
@@ -106,7 +96,7 @@ class _AdminListState extends State<AdminList> {
             ),
             Expanded(
               child: StreamBuilder(
-                stream: _admins,
+                stream: _users,
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     return const Text("Connection Error");
@@ -119,10 +109,6 @@ class _AdminListState extends State<AdminList> {
                   return ListView.builder(
                     itemCount: docs.length,
                     itemBuilder: (context, index) {
-                      if (docs[index]['User_ID'].toString() == id) {
-                        // Return an empty container to effectively hide the item
-                        return Container();
-                      }
                       if (_search.text.toString().isEmpty) {
                         return Container(
                           padding: const EdgeInsets.symmetric(
