@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sexpertise/Interfaces/User/Manage%20User/AddAUser.dart';
 import 'package:sexpertise/Interfaces/User/Manage%20User/EditUser.dart';
@@ -11,6 +12,50 @@ class UsersList extends StatefulWidget {
 }
 
 class _UsersListState extends State<UsersList> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  void deleteAccountAlert() {
+    showDialog(
+        context: context,
+        builder: (BuildContext dialogContext) {
+          return AlertDialog(
+            title: Text('Delete Account'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  controller: _emailController,
+                  decoration: InputDecoration(labelText: 'Email'),
+                ),
+                TextField(
+                  controller: _passwordController,
+                  obscureText: true,
+                  decoration: InputDecoration(labelText: 'Password'),
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  _emailController.clear();
+                  _passwordController.clear();
+                  Navigator.of(context).pop();
+                },
+                child: Text('Cancel'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  _onDeletePressed(context);
+                  deleteData(selectedIndex);
+                },
+                child: Text('Delete Account'),
+              ),
+            ],
+          );
+        });
+  }
+
   final _users = FirebaseFirestore.instance
       .collection('Users')
       .where('Role', isEqualTo: 'User')
@@ -20,6 +65,50 @@ class _UsersListState extends State<UsersList> {
 
   TextEditingController _search = TextEditingController();
   String search = '';
+
+  //Delete Data
+  void deleteData(String uId) async {
+    await FirebaseFirestore.instance.collection('Users').doc(uId).delete();
+  }
+
+  void _onDeletePressed(BuildContext context) async {
+    final email = _emailController.text.trim();
+    final password = _passwordController.text;
+
+    if (email.isEmpty || password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Email and password are required.')),
+      );
+      return;
+    }
+
+    try {
+      await deleteAccount(email, password);
+      Navigator.of(context).pop();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Account deleted successfully.')),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error deleting account: $e')),
+      );
+    }
+  }
+
+  Future<void> deleteAccount(String email, String password) async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      User user = FirebaseAuth.instance.currentUser!;
+      await user.delete();
+    } catch (e) {
+      throw e;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -203,9 +292,20 @@ class _UsersListState extends State<UsersList> {
                                           ),
                                         ),
                                         Spacer(),
-                                        Icon(
-                                          Icons.delete,
-                                          color: Colors.red,
+                                        GestureDetector(
+                                          onTap: () {
+                                            deleteAccountAlert();
+                                            setState(() {
+                                              selectedIndex = docs[index]
+                                                      ['User_ID']
+                                                  .toString();
+                                              print(selectedIndex);
+                                            });
+                                          },
+                                          child: Icon(
+                                            Icons.delete,
+                                            color: Colors.red,
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -284,15 +384,45 @@ class _UsersListState extends State<UsersList> {
                                     ),
                                     Column(
                                       children: [
-                                        Icon(
-                                          Icons.edit,
-                                          color: const Color.fromARGB(
-                                              255, 0, 74, 173),
+                                        GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              selectedIndex = docs[index]
+                                                      ['User_ID']
+                                                  .toString();
+                                              print(selectedIndex);
+
+                                              Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      EditUser(
+                                                    userIDE: selectedIndex,
+                                                  ),
+                                                ),
+                                              );
+                                            });
+                                          },
+                                          child: Icon(
+                                            Icons.edit,
+                                            color: const Color.fromARGB(
+                                                255, 0, 74, 173),
+                                          ),
                                         ),
                                         Spacer(),
-                                        Icon(
-                                          Icons.delete,
-                                          color: Colors.red,
+                                        GestureDetector(
+                                          onTap: () {
+                                            deleteAccountAlert();
+                                            setState(() {
+                                              selectedIndex = docs[index]
+                                                      ['User_ID']
+                                                  .toString();
+                                              print(selectedIndex);
+                                            });
+                                          },
+                                          child: Icon(
+                                            Icons.delete,
+                                            color: Colors.red,
+                                          ),
                                         ),
                                       ],
                                     ),
