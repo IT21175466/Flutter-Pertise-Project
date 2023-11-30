@@ -20,18 +20,18 @@ class _UsersListState extends State<UsersList> {
         context: context,
         builder: (BuildContext dialogContext) {
           return AlertDialog(
-            title: Text('Delete Account'),
+            title: const Text('Delete Account'),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextField(
                   controller: _emailController,
-                  decoration: InputDecoration(labelText: 'Email'),
+                  decoration: const InputDecoration(labelText: 'Email'),
                 ),
                 TextField(
                   controller: _passwordController,
                   obscureText: true,
-                  decoration: InputDecoration(labelText: 'Password'),
+                  decoration: const InputDecoration(labelText: 'Password'),
                 ),
               ],
             ),
@@ -42,14 +42,14 @@ class _UsersListState extends State<UsersList> {
                   _passwordController.clear();
                   Navigator.of(context).pop();
                 },
-                child: Text('Cancel'),
+                child: const Text('Cancel'),
               ),
               ElevatedButton(
                 onPressed: () {
                   _onDeletePressed(context);
                   deleteData(selectedIndex);
                 },
-                child: Text('Delete Account'),
+                child: const Text('Delete Account'),
               ),
             ],
           );
@@ -77,7 +77,7 @@ class _UsersListState extends State<UsersList> {
 
     if (email.isEmpty || password.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Email and password are required.')),
+        const SnackBar(content: Text('Email and password are required.')),
       );
       return;
     }
@@ -86,7 +86,7 @@ class _UsersListState extends State<UsersList> {
       await deleteAccount(email, password);
       Navigator.of(context).pop();
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Account deleted successfully.')),
+        const SnackBar(content: Text('Account deleted successfully.')),
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -226,7 +226,7 @@ class _UsersListState extends State<UsersList> {
                                 });
                               },
                               child: Container(
-                                padding: EdgeInsets.all(10),
+                                padding: const EdgeInsets.all(10),
                                 height: 80,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
@@ -251,7 +251,7 @@ class _UsersListState extends State<UsersList> {
                                                 fontWeight: FontWeight.w700,
                                               ),
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               height: 5,
                                             ),
                                             Text(
@@ -285,13 +285,13 @@ class _UsersListState extends State<UsersList> {
                                               );
                                             });
                                           },
-                                          child: Icon(
+                                          child: const Icon(
                                             Icons.edit,
-                                            color: const Color.fromARGB(
-                                                255, 0, 74, 173),
+                                            color:
+                                                Color.fromARGB(255, 0, 74, 173),
                                           ),
                                         ),
-                                        Spacer(),
+                                        const Spacer(),
                                         GestureDetector(
                                           onTap: () {
                                             deleteAccountAlert();
@@ -302,7 +302,7 @@ class _UsersListState extends State<UsersList> {
                                               print(selectedIndex);
                                             });
                                           },
-                                          child: Icon(
+                                          child: const Icon(
                                             Icons.delete,
                                             color: Colors.red,
                                           ),
@@ -343,7 +343,7 @@ class _UsersListState extends State<UsersList> {
                                 });
                               },
                               child: Container(
-                                padding: EdgeInsets.all(10),
+                                padding: const EdgeInsets.all(10),
                                 height: 80,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
@@ -368,7 +368,7 @@ class _UsersListState extends State<UsersList> {
                                                 fontWeight: FontWeight.w700,
                                               ),
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               height: 5,
                                             ),
                                             Text(
@@ -402,13 +402,13 @@ class _UsersListState extends State<UsersList> {
                                               );
                                             });
                                           },
-                                          child: Icon(
+                                          child: const Icon(
                                             Icons.edit,
-                                            color: const Color.fromARGB(
-                                                255, 0, 74, 173),
+                                            color:
+                                                Color.fromARGB(255, 0, 74, 173),
                                           ),
                                         ),
-                                        Spacer(),
+                                        const Spacer(),
                                         GestureDetector(
                                           onTap: () {
                                             deleteAccountAlert();
@@ -419,7 +419,7 @@ class _UsersListState extends State<UsersList> {
                                               print(selectedIndex);
                                             });
                                           },
-                                          child: Icon(
+                                          child: const Icon(
                                             Icons.delete,
                                             color: Colors.red,
                                           ),
