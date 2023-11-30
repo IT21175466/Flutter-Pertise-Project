@@ -130,14 +130,6 @@ class _AddAAdminState extends State<AddAAdmin> {
         isClicked = false;
       });
 
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => AdminList(
-                  adminID: user.uid.toString(),
-                )),
-      );
-
       // Clear the text fields after successful registration
       _emailController.clear();
       _passwordController.clear();
