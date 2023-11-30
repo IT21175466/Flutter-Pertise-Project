@@ -5,14 +5,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class AddAAdmin extends StatefulWidget {
-  const AddAAdmin({super.key});
+class AddAUser extends StatefulWidget {
+  const AddAUser({super.key});
 
   @override
-  State<AddAAdmin> createState() => _AddAAdminState();
+  State<AddAUser> createState() => _AddAUserState();
 }
 
-class _AddAAdminState extends State<AddAAdmin> {
+class _AddAUserState extends State<AddAUser> {
   bool isSecurePassword = true;
   bool isClicked = false;
 
@@ -122,7 +122,7 @@ class _AddAAdminState extends State<AddAAdmin> {
       );
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Added A New Admin')),
+        SnackBar(content: Text('Added A New User')),
       );
 
       setState(() {
@@ -154,7 +154,7 @@ class _AddAAdminState extends State<AddAAdmin> {
     await FirebaseFirestore.instance.collection('Users').doc(uID).set({
       'User_ID': uID,
       'Name': name,
-      'Role': 'Admin',
+      'Role': 'User',
       'Email': email,
       'Phone_Number': '',
       'Birth_Day': '',
@@ -193,7 +193,7 @@ class _AddAAdminState extends State<AddAAdmin> {
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            'Add Admin',
+                            'Add User',
                             style: TextStyle(
                               fontSize: 35,
                               fontWeight: FontWeight.w600,

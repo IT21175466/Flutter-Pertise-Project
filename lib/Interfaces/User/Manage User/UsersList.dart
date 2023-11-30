@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:sexpertise/Interfaces/User/Manage%20User/AddAUser.dart';
 import 'package:sexpertise/Interfaces/User/Manage%20User/EditUser.dart';
 
 class UsersList extends StatefulWidget {
@@ -42,12 +43,12 @@ class _UsersListState extends State<UsersList> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => const AddAAdmin(),
-                    //   ),
-                    // );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AddAUser(),
+                      ),
+                    );
                   },
                   child: const Icon(
                     Icons.add_circle,
