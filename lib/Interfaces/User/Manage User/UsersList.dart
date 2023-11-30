@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:sexpertise/Interfaces/User/Manage%20User/EditUser.dart';
 
 class UsersList extends StatefulWidget {
   const UsersList({super.key});
@@ -176,10 +177,29 @@ class _UsersListState extends State<UsersList> {
                                     ),
                                     Column(
                                       children: [
-                                        Icon(
-                                          Icons.edit,
-                                          color: const Color.fromARGB(
-                                              255, 0, 74, 173),
+                                        GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              selectedIndex = docs[index]
+                                                      ['User_ID']
+                                                  .toString();
+                                              print(selectedIndex);
+
+                                              Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      EditUser(
+                                                    userIDE: selectedIndex,
+                                                  ),
+                                                ),
+                                              );
+                                            });
+                                          },
+                                          child: Icon(
+                                            Icons.edit,
+                                            color: const Color.fromARGB(
+                                                255, 0, 74, 173),
+                                          ),
                                         ),
                                         Spacer(),
                                         Icon(
