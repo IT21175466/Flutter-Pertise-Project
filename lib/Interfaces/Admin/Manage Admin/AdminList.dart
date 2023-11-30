@@ -349,7 +349,7 @@ class _AdminListState extends State<AdminList> {
                                   // Navigator.of(context).push(
                                   //   MaterialPageRoute(
                                   //     builder: (context) =>
-                                  //         ViewArticleAdmin(id: selectedIndex),
+                                  //        ViewArticleAdmin(id: selectedIndex),
                                   //   ),
                                   // );
                                 });
@@ -396,15 +396,45 @@ class _AdminListState extends State<AdminList> {
                                     ),
                                     Column(
                                       children: [
-                                        Icon(
-                                          Icons.edit,
-                                          color: const Color.fromARGB(
-                                              255, 0, 74, 173),
+                                        GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              selectedIndex = docs[index]
+                                                      ['User_ID']
+                                                  .toString();
+                                              print(selectedIndex);
+
+                                              Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      EditAdmin(
+                                                    userIDE: selectedIndex,
+                                                  ),
+                                                ),
+                                              );
+                                            });
+                                          },
+                                          child: Icon(
+                                            Icons.edit,
+                                            color: const Color.fromARGB(
+                                                255, 0, 74, 173),
+                                          ),
                                         ),
                                         Spacer(),
-                                        Icon(
-                                          Icons.delete,
-                                          color: Colors.red,
+                                        GestureDetector(
+                                          onTap: () {
+                                            deleteAccountAlert();
+                                            setState(() {
+                                              selectedIndex = docs[index]
+                                                      ['User_ID']
+                                                  .toString();
+                                              print(selectedIndex);
+                                            });
+                                          },
+                                          child: Icon(
+                                            Icons.delete,
+                                            color: Colors.red,
+                                          ),
                                         ),
                                       ],
                                     ),
