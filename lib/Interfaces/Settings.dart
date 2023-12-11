@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +24,6 @@ class _SettingsPageState extends State<SettingsPage> {
 
   //
   String? userID;
-  File? _selectedImage;
 
   @override
   void initState() {
