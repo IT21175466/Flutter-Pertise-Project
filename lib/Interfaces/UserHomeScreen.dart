@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sexpertise/Interfaces/ChatBot/ChatList.dart';
 import 'package:sexpertise/Interfaces/Settings.dart';
 import 'package:sexpertise/Interfaces/User/ArticlelListUser.dart';
 import 'package:sexpertise/Interfaces/User/VideoListUser.dart';
@@ -107,16 +108,24 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
             Row(
               children: [
                 const Spacer(),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 35, horizontal: 35),
-                  height: 150,
-                  width: 150,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const ChatListPage()));
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 35, horizontal: 35),
+                    height: 150,
+                    width: 150,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Image.asset('lib/Assets/chatbot.png'),
                   ),
-                  child: Image.asset('lib/Assets/chatbot.png'),
                 ),
                 const Spacer(),
                 GestureDetector(

@@ -6,6 +6,7 @@ import 'package:sexpertise/Interfaces/Admin/Blog%20Function/ArticleListPage.dart
 import 'package:sexpertise/Interfaces/Admin/Manage%20Admin/SelectionPage.dart';
 import 'package:sexpertise/Interfaces/Admin/Video%20Function/VideoListPage.dart';
 import 'package:sexpertise/Interfaces/AdminQuizList.dart';
+import 'package:sexpertise/Interfaces/ChatBot/ChatList.dart';
 
 class AdminHomeScreen extends StatefulWidget {
   const AdminHomeScreen({super.key});
@@ -114,16 +115,24 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
             Row(
               children: [
                 const Spacer(),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 35, horizontal: 35),
-                  height: 150,
-                  width: 150,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const ChatListPage()));
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 35, horizontal: 35),
+                    height: 150,
+                    width: 150,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Image.asset('lib/Assets/chatbot.png'),
                   ),
-                  child: Image.asset('lib/Assets/chatbot.png'),
                 ),
                 const Spacer(),
                 GestureDetector(
